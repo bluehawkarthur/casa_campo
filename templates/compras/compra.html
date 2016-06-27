@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .tipo-compra{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    line-height: 1.8;
+  }
+  .casilla-productos{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #fafafa;
+    
+  }
+</style>
+<section id="content" class="">
+
+            <div class="panel invoice-panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Compra de articulos</span>
+
+                    <div class="panel-header-menu pull-right mr10">
+                        <button type="button" class="btn btn-xs btn-default btn-gradient mr5">
+                            <i class="fa fa-plus-square pr5"></i> New Invoice
+                        </button>
+                        <a href="javascript:window.print()" class="btn btn-xs btn-default btn-gradient mr5">
+                            <i class="fa fa-print fs13"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="panel-body p20" id="invoice-item">
+
+                  
+                    <div class="allcp-form">
+                        
+                        <div class="col-md-3 ph10 mb5">
+                          
+                            <label for="username" class="field-label">Comprob.</label>
+                            <label for="comprobante" class="field ">
+                                <input type="text" name="comprobante" id="comprobante" class="gui-input" placeholder="Comprobante...">
+                                
+                            </label>
+                            
+                        </div>
+                        <div class="col-md-3 ph10 mb5">
+                            <label for="username" class="field-label">Proveedor</label>
+                            <label for="lastname" class="field ">
+                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+            
+                            </label>
+                        </div>
+                        <div class="col-md-3 ph10 mb5">
+                            <label for="username" class="field-label">Grupo</label>
+                            <label for="lastname" class="field">
+                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                                
+                            </label>
+                        </div>
+                        <div class="col-md-3 ph10 mb5">
+                            <label for="username" class="field-label">Fecha</label>
+                            <label for="fecha" class="field">
+                               <input type="text" id="datepicker1" name="fecha" class="gui-input" placeholder="fecha">
+                                
+                            </label>
+
+                        </div>
+                        <div class="col-md-3 ph10 mb5">
+                            <label for="username" class="field-label">Factura</label>
+                            <label for="factura" class="field ">
+                                <input type="text" name="factura" id="factura" class="gui-input" placeholder="factura...">
+            
+                            </label>
+                        </div>
+
+                        <div class="col-md-6 ph10 mb5">
+                            <label for="username" class="field-label">Nombre</label>
+                            <label for="lastname" class="field ">
+                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+            
+                            </label>
+                        </div>
+                        <div class="col-md-3 ph10 mb5">
+                         
+                          <div class="tipo-compra">
+                            <div class="bs-component">
+                                <div class="radio-custom radio-primary mb10">
+                                    <input type="radio" id="radioExample1" name="tipodcompra" checked="" value="credito">
+                                    <label for="radioExample1">Credito</label>
+                                </div>
+                            </div>
+                            <div class="bs-component">
+                                <div class="radio-custom radio-primary">
+                                    <input type="radio" id="radioExample2" name="tipodcompra" value="contado">
+                                    <label for="radioExample2">Contado</label>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="casilla-productos">
+                          <div class="col-md-2 ph10 mb5">
+                              <label for="username" class="field-label">Codigo</label>
+                              <label for="lastname" class="field ">
+                                  <input type="text" name="codigo" id="add_buscar_item" class="gui-input" placeholder="Codigo">
+                                  <input type="hidden" id="pk">
+              
+                              </label>
+                          </div>
+                          <div class="col-md-2 ph10 mb5">
+                              <label for="username" class="field-label">Unidad</label>
+                              <label for="unidad" class="field ">
+                                  <input type="text" name="unidad" id="unidad" class="gui-input" placeholder="Unidad">
+              
+                              </label>
+                          </div>
+                          <div class="col-md-4 ph10 mb5">
+                              <label for="username" class="field-label">Descripcion</label>
+                              <label for="descripcion" class="field ">
+                                  <input type="text" name="descripcion" id="descripcion" class="gui-input" placeholder="Descripcion...">
+              
+                              </label>
+                          </div>
+                          <div class="col-md-2 ph10 mb5">
+                              <label for="username" class="field-label">Cantid.</label>
+                              <label for="cantidad" class="field ">
+                                  <input type="text" name="cantidad" id="cantidad" class="gui-input agregar_item" placeholder="Cantid.">
+              
+                              </label>
+                          </div>
+                          <div class="col-md-2 ph10 mb5">
+                              <label for="username" class="field-label ">Presio Cost.</label>
+                              <label for="pr_costo" class="field ">
+                                  <input type="text" name="pr_costo" id="pr_costo" class="gui-input agregar_item" placeholder="Presio Cost.">
+              
+                              </label>
+                          </div>
+                         
+                        </div>
+
+
+                        
+                    
+                    <hr class="short alt">           
+                    <div class="row" id="invoice-table">
+                        <div class="col-md-12">
+                            <table class="table table-hover" id="tb-detalle">
+                                <thead>
+                                <tr class="primary">
+                                    <th >Codigo</th>
+                                    <th>Unidad</th>
+                                    <th >Descripcion</th>
+                                    <th >Cantidad</th>
+                                    <th >Pr.Costo</th>
+                                    <th >Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                 <tr>
+                                    <td colspan="4" class="white"></td>
+                                    <td class="cyan white-text">Total:</td>
+                                    <td class="cyan white-text" id="sum-subtotal">0.00</td>
+                                    <td></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" id="invoice-table">
+                        <div class="col-md-12">
+                            
+
+                           
+                            <div class="clearfix"></div>
+                            <form method="POST">
+                              
+                              <div class="basic-invoice-buttons">
+                              <a href="#" onclick="deleteAll();" class="btn btn-danger  mb5"><i class="fa fa-minus-square pr5"></i>Borrar</a>
+                                  <a href="javascript:window.print()" class="btn btn-default  mb5">
+                                      <i class="fa fa-print pr5"></i> Imprimir</a>
+
+                                  
+                                      <input id="proceso" name="proceso" type="hidden" />
+                                      <!--  <button class="btn btn-primary mb5" id="save"  name="action"><i class="fa fa-floppy-o pr5"></i> Terminar
+                                        </button> -->
+                                        <a  class="btn btn-primary mb5" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>
+                                  
+                                  
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+{% endblock content %}
+{% block js %}
+  {% load staticfiles %}
+  <script src="{% static "js/compras/compras.js"%}"></script>
+  <script>
+  $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  </script>
+    
+{% endblock js %}
+

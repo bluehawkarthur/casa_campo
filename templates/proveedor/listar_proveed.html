@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+<section id="content" class="table-layout">
+    <div class="chute chute-center" style="height: 930px;">
+        <div class="panel" id="spy5">
+            <div class="panel-heading">
+        <a href="/crear_proveed" class="btn btn-bordered btn-primary mb5">Agregar</a>
+                <span class="panel-title">Lista Proveedor</span>
+                <div class="pull-right hidden-xs">
+                    <code class="mr20"></code>
+                </div>
+
+            </div>
+            <div class="panel-body pn">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <div class="bs-component">
+                            <table class="table table-bordered mbn">
+                                <thead>
+                                    <tr>
+                                        <th>codigo</th>
+                                        <th>nombre</th>
+                                        <th>grupos</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prov in proveedor %}
+                                    <tr>
+                                        <td>{{ prov.codigo}}</td>
+                                        <td>{{ prov.nombre}}</td>
+                                        <td>{{ prov.grupos}}</td>
+                                    <td>
+                                        <a class="btn btn-info"  href="/detalle_proveed/{{prov.id}}"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                 
+                                    <td>
+                                        <a class="btn btn-alert" href="/edit_prove/{{prov.id}}"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="/delete_proveedor/{{prov.id}}"><i class="fa fa-trash-o"></i></a>
+                                        
+                                        <a href="#modal{{prov.id}}" class="btn-floating waves-effect tooltipped modal-trigger red waves-light" data-position="top" data-delay="50" data-tooltip="Eliminar"><i class="mdi-action-delete left"></i></a>
+
+                                        <div id="modal{{prov.id}}" class="modal teal">
+                                          <div class="modal-content">
+                                            <p class="img-dashboard">Esta seguro que quiere eliminar "{{prov.codigo}}"</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <a href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Cancelar</a>
+                                            <a href="/delete_proveedor/{{prov.id}}" class="waves-effect waves-green btn-flat modal-action modal-close">Aceptar</a>
+                                          </div>
+                                        </div>
+                                    </td>
+                                    
+                                    </tr>
+                                    {% endfor %}   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

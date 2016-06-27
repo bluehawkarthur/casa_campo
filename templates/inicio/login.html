@@ -1,0 +1,86 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- -------------- Meta and Title -------------- -->
+  <meta charset="utf-8">
+  <title>Alliance - A Responsive Bootstrap 3 Admin Dashboard Template</title>
+  <meta name="keywords" content="HTML5, Bootstrap 3, Admin Template, UI Theme"/>
+  <meta name="description" content="Alliance - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="ThemeREX">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- -------------- Fonts -------------- -->
+
+  <!-- -------------- CSS - theme -------------- -->
+  <link rel="stylesheet" type="text/css" href="{% static "skin/default_skin/css/theme.css"%}">
+
+  <!-- -------------- CSS - allcp forms -------------- -->
+  <link rel="stylesheet" type="text/css" href="{% static "allcp/forms/css/forms.css"%}">
+
+  <!-- -------------- Favicon -------------- -->
+  <link rel="shortcut icon" href="{% static "img/favicon.ico"%}">
+
+  <!-- -------------- IE8 HTML5 support  -------------- -->
+  </head>
+
+<body class="utility-page sb-l-c sb-r-c">
+    <div id="main" class="animated fadeIn">
+    	<section id="content_wrapper">
+	        <div id="canvas-wrapper">
+	          <canvas id="demo-canvas"></canvas>
+	        </div>
+        <!-- -------------- Content -------------- -->
+	    	<section id="content">
+	          <!-- -------------- Login Form -------------- -->
+		        <div class="allcp-form theme-primary mw320" id="login">
+			        <div class="panel mw320">
+					<span class="text-center mb20">LOGIN</span>
+
+			        	<form id="login-form" method="POST"  id="login">{% csrf_token %}
+			        	
+			        		<div class="panel-body pn mv10">
+			        			<div class="section">
+			        				<label for="firstname" class="field prepend-icon {% if form.errors.username %} state-error {% endif %}">
+                                    {{form.username|add_class:"gui-input"|attr:"placeholder:username"}}
+                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i></label>
+                                    </label><em for="firstname" class="state-error">{{ form.errors.username|removetags:'ul li' }}</em>
+			        			</div>
+
+			        			<div class="section">
+			        				<label for="firstname" class="field prepend-icon {% if form.errors.password %} state-error {% endif %}">
+                                    {{form.password|add_class:"gui-input"|attr:"placeholder:password"}}
+                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i></label>
+                                    </label><em for="firstname" class="state-error">{{ form.errors.password|removetags:'ul li' }}</em>
+			        			</div>
+
+			        			<div class="section">
+			        				<button type="submit" class="btn btn-bordered btn-primary pull-right">Guardar</button>
+			        			</div>
+
+			        		</div>
+			        	</form>
+			        </div>
+		        </div>
+	    	</section>
+     	</section>
+    </div>
+  
+	<script src="{% static "js/jquery/jquery-1.11.3.min.js"%}"></script>
+	<script src="{% static "js/jquery/jquery_ui/jquery-ui.min.js"%}"></script>
+
+	<!-- -------------- CanvasBG JS -------------- -->
+	<script src="{% static "js/plugins/canvasbg/canvasbg.js"%}"></script>
+
+	<!-- -------------- Theme Scripts -------------- -->
+	<script src="{% static "js/utility/utility.js"%}"></script>
+	<script src="{% static "js/demo/demo.js"%}"></script>
+	<script src="{% static "js/main.js"%}"></script>
+
+	<!-- -------------- Page JS -------------- -->
+
+	<!-- -------------- /Scripts -------------- -->
+</body>
+
+</html>

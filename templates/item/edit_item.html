@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+
+<section id="content" class="table-layout">
+            <div class="chute chute-center" style="height: 762px;">
+                <div class="allcp-form theme-primary mw1000 center-block pb175">
+                    <div class="panel panel-primary">
+                        <form class=""  method="POST" enctype='multipart/form-data' novalidate="novalidate">{% csrf_token %}
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    Registro de Item
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="firstname" class="field prepend-icon {% if form.errors.codigo %} state-error {% endif %}">
+                                            {{form.codigo|add_class:"gui-input"|attr:"placeholder:codigo"}}
+                                            <label for="firstname" class="field-icon"><i class="fa fa-user"></i></label>
+                                        </label><em for="firstname" class="state-error">{{ form.errors.codigo|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="firstname" class="field prepend-icon {% if form.errors.unidad %} state-error {% endif %}">
+                                            {{form.unidad|add_class:"gui-input"|attr:"placeholder:unidad"}}
+                                            <label for="firstname" class="field-icon">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </label><em for="firstname" class="state-error">{{ form.errors.unidad|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="firstname" class="field prepend-icon {% if form.errors.descripcion %} state-error {% endif %}">
+                                            {{form.descripcion|add_class:"gui-input"|attr:"placeholder:descripcion"}}
+                                            <label for="firstname" class="field-icon">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </label><em for="firstname" class="state-error">{{ form.errors.descripcion|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="firstname" class="field prepend-icon {% if form.errors.cantidad %} state-error {% endif %}">
+                                            {{form.cantidad|add_class:"gui-input"|attr:"placeholder:cantidad"}}
+                                            <label for="firstname" class="field-icon">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </label><em for="firstname" class="state-error">{{ form.errors.cantidad|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="firstname" class="field prepend-icon {% if form.errors.pr_costo %} state-error {% endif %}">
+                                            {{form.pr_costo|add_class:"gui-input"|attr:"placeholder:pr_costo"}}
+                                            <label for="firstname" class="field-icon">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </label><em for="firstname" class="state-error">{{ form.errors.pr_costo|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                 
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button type="submit" class="btn btn-bordered btn-primary mb5"> Guardar</button>
+                                <a href="/listar_item" class="btn btn-bordered btn-primary mb5">Volver  Atras</a>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+</section>
+
+{% endblock content %}
+
+	
