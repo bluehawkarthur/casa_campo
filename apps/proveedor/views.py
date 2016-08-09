@@ -15,8 +15,7 @@ def CrearProveedor(request):
 		if form.is_valid():
 			proveedor = Proveedor(
 				codigo=form.cleaned_data['codigo'],
-				nombre=form.cleaned_data['nombre'],
-				grupos=form.cleaned_data['grupos'])
+				nombre=form.cleaned_data['nombre'])
 			proveedor.save()
 			return HttpResponseRedirect(reverse_lazy('listar_proveed'))
 	else:
@@ -43,7 +42,7 @@ class DetalleProveedor(DetailView):
 class EditProveedor(UpdateView):
 	template_name = 'proveedor/edit_prove.html'
 	model = Proveedor
-	fields = ['codigo', 'nombre', 'grupos']
+	fields = ['codigo', 'nombre']
 	success_url = reverse_lazy('listar_proveed')
 
 
@@ -51,3 +50,7 @@ def DeleteProveedor(request, proveedor):
 	e = Proveedor.objects.get(id=proveedor)
 	e.delete()
 	return HttpResponseRedirect(reverse_lazy('listar_proveed'))
+
+
+# def KardesProve(request, pk)):
+# 	proveedor = proveedor objects filter(item =item.request.item, id=pk)

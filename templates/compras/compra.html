@@ -29,6 +29,45 @@
     background-color: #fafafa;
     
   }
+ /* .bloquet{
+    display: block;
+  }
+  .bodytable{
+    height: 220px;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    position: relative;
+  }
+  .with-cell{
+    width: 10%;
+  }*/
+  .prueba{
+    background-color: #958BD4 !important;
+    color: white;
+  }
+  .dataTables_wrapper select, .dataTables_wrapper input {
+    font-size: 12px;
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline;
+    border: 1px solid #d8dde5;
+  }
+  .dataTables_wrapper input {
+    width: 200px;
+  }
+  .dataTables_length, .dataTables_filter {
+    padding: 15px;
+  }
+
+  .columna_id{
+    display: none;
+  }
+  .color_button{
+    background-color: red;
+    color: red;
+  }
+  /*button:focus {color:red !important;}*/
 </style>
 <section id="content" class="">
 
@@ -55,22 +94,24 @@
                           
                             <label for="username" class="field-label">Comprob.</label>
                             <label for="comprobante" class="field ">
-                                <input type="text" name="comprobante" id="comprobante" class="gui-input" placeholder="Comprobante...">
+                                <input type="text" name="comprobante" id="comprobante" class="gui-input" placeholder="Comprobante..." value="{{comprobante}}">
                                 
                             </label>
                             
                         </div>
                         <div class="col-md-3 ph10 mb5">
                             <label for="username" class="field-label">Proveedor</label>
-                            <label for="lastname" class="field ">
-                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                            <label for="proveedor" class="field ">
+                                <input type="text" name="proveedor" id="proveedor" class="gui-input" placeholder="codigo">
+
+                                <input type="hidden" id="pk_proveedor">
             
                             </label>
                         </div>
                         <div class="col-md-3 ph10 mb5">
                             <label for="username" class="field-label">Grupo</label>
-                            <label for="lastname" class="field">
-                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                            <label for="grupo" class="field">
+                                <input type="text" name="grupo" id="grupo" class="gui-input" placeholder="grupo">
                                 
                             </label>
                         </div>
@@ -92,8 +133,8 @@
 
                         <div class="col-md-6 ph10 mb5">
                             <label for="username" class="field-label">Nombre</label>
-                            <label for="lastname" class="field ">
-                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                            <label for="nombre" class="field ">
+                                <input type="text" name="nombre" id="nombre" class="gui-input" placeholder="Last name...">
             
                             </label>
                         </div>
@@ -141,7 +182,7 @@
                           <div class="col-md-2 ph10 mb5">
                               <label for="username" class="field-label">Cantid.</label>
                               <label for="cantidad" class="field ">
-                                  <input type="text" name="cantidad" id="cantidad" class="gui-input agregar_item" placeholder="Cantid.">
+                                  <input type="text" name="cantidad" id="cantidad" class="gui-input" placeholder="Cantid.">
               
                               </label>
                           </div>
@@ -194,16 +235,15 @@
                             <form method="POST">
                               
                               <div class="basic-invoice-buttons">
-                              <a href="#" onclick="deleteAll();" class="btn btn-danger  mb5"><i class="fa fa-minus-square pr5"></i>Borrar</a>
-                                  <a href="javascript:window.print()" class="btn btn-default  mb5">
+                              <a href="#" onclick="deleteAll();" class="btn btn-danger  mb5 reporte"><i class="fa fa-minus-square pr5"></i>Borrar</a>
+                                  <a href="javascript:window.print('ttutu')" class="btn btn-default  mb5 reporte">
                                       <i class="fa fa-print pr5"></i> Imprimir</a>
 
                                   
                                       <input id="proceso" name="proceso" type="hidden" />
                                       <!--  <button class="btn btn-primary mb5" id="save"  name="action"><i class="fa fa-floppy-o pr5"></i> Terminar
                                         </button> -->
-                                        <a  class="btn btn-primary mb5" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>
-                                  
+                                        <a  class="btn btn-primary mb5 reporte" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>                 
                                   
                               </div>
                             </form>
@@ -213,11 +253,240 @@
                 </div>
             </div>
 
+            
+
+            <div id="modal-text" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                        <span class="panel-title"> Proveedor</span>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="mt5"> Proveedor Nuevo</h3>
+
+                        
+                    </div>
+                    <div class="panel-footer text-right">
+                        
+                        <button data-value="si"  class="btn btn-success proveedor_confirm" type="button" id="si_compra" >Si</button>
+                        <button data-value="no" class="btn btn-danger proveedor_confirm" type="button">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-item" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                      <span class="panel-icon">
+                        <i class="fa fa-pencil"></i>
+                      </span>
+                      <span class="panel-title">Articulo</span>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="mt5"> Articulo Nuevo</h3>
+
+                        
+                    </div>
+                    <div class="panel-footer text-right">
+                        <button data-value="si" id="si_item" class="btn btn-success item_confirm" type="button" >Si</button>
+                        <button data-value="no" class="btn btn-danger item_confirm" type="button">No</button>
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="proveedor-lista" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                        <span class="panel-title"> Lista Proveedores </span>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="mt5"> Proveedor Nuevo</h3>
+                     
+                        <div class="table-responsive">
+                          <table class="table" id="tb-proveedores">
+                              <thead class="bloquet">
+                              <tr class="primary">
+                                  <th data-type="filter" class="with-cell">pk</th>
+                                  <th data-type="filter" class="with-cell">Codigo</th>
+                                  <th data-type="filter" class="with-cell">Nombre</th>
+                              </tr>
+                              </thead>
+                              <tbody class="bloquet bodytable">
+                              
+                              </tbody>
+                          </table>
+                        </div>
+
+                        
+                    </div>
+                    <div class="panel-footer text-right">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+            <!-- -------------- Proveedor Form Popup -------------- -->
+            <div id="proveedor-nuevo"  class=" popup-basic allcp-form mfp-with-anim mfp-hide">
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-title">
+                <i class="fa fa-rocket"></i>Proveedor</span>
+                    </div>
+                    <!-- -------------- /Panel Heading -------------- -->
+
+                    <form method="post" id="formproveedor">
+                        <div class="panel-body  ph15">
+                            <div class="section row">
+                                <div class="col-md-6 ph15">
+                                    <label for="codigo" class="field prepend-icon">
+                                        <input type="text" name="codigo" id="codigo" class="gui-input"
+                                               placeholder="Codigo...">
+                                        <label for="codigo" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- -------------- /section -------------- -->
+
+                                <div class="col-md-6 ph15">
+                                    <label for="nombre" class="field prepend-icon">
+                                        <input type="text" name="nombre" id="nombre_proveedor" class="gui-input"
+                                               placeholder="Nombre...">
+                                        <label for="nombre" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- -------------- /section -------------- -->
+
+                            </div>
+                        </div>
+                        <!-- -------------- /Form -------------- -->
+
+                        <div class="panel-footer">
+                            <button type="button" id="register-proveedor" class="button btn-primary">Guardar proveedor</button>
+                        </div>
+                        <!-- -------------- /Panel Footer -------------- -->
+                    </form>
+                </div>
+                
+            </div>
+
+             <!-- -------------- Item Form Popup -------------- -->
+            <div id="item-nuevo"  class=" popup-basic allcp-form mfp-with-anim mfp-hide">
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-title">
+                <i class="fa fa-rocket"></i>Articulo</span>
+                    </div>
+                    <!-- -------------- /Panel Heading -------------- -->
+
+                    <form method="post" id="formitem">
+                        <div class="panel-body  ph15">
+                            <div class="section row">
+                                <div class="col-md-6 ph15">
+                                    <label for="codigo_item" class="field prepend-icon">
+                                        <input type="text" name="codigo_item" id="codigo_item" class="gui-input"
+                                               placeholder="Codigo...">
+                                        <label for="codigo_item" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- -------------- /section -------------- -->
+
+                                <div class="col-md-6 ph15">
+                                    <label for="descripcion_item" class="field prepend-icon">
+                                        <input type="text" name="descripcion_item" id="descripcion_item" class="gui-input"
+                                               placeholder="Descripcion...">
+                                        <label for="descripcion_item" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- -------------- /section -------------- -->
+
+                            </div>
+                            <!-- -------------- /Section -------------- -->
+
+                            <div class="section row">
+                                <div class="col-md-6 ph15">
+                                    <label for="unidad_item" class="field prepend-icon">
+                                        <input type="text" name="unidad_item" id="unidad_item" class="gui-input"
+                                               placeholder="Unidad">
+                                        <label for="unidad_item" class="field-icon">
+                                            <i class="fa fa-envelope"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                
+
+                                <div class="col-md-6 ph15">
+                                    <label for="cantidad_item" class="field prepend-icon">
+                                        <input type="text" name="cantidad_item" id="cantidad_item" class="gui-input"
+                                               placeholder="Cantidad...">
+                                        <label for="cantidad_item" class="field-icon">
+                                            <i class="fa fa-globe"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="section row">
+                                <div class="col-md-6 ph15">
+                                    <label for="pr_costo_item" class="field prepend-icon">
+                                        <input type="text" name="pr_costo_item" id="pr_costo_item" class="gui-input"
+                                               placeholder="Precio costo">
+                                        <label for="pr_costo_item" class="field-icon">
+                                            <i class="fa fa-envelope"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                        <!-- -------------- /Form -------------- -->
+
+                        <div class="panel-footer">
+                            <button type="button" id="register-item" class="button btn-primary">Guardar articulo</button>
+                        </div>
+                        <!-- -------------- /Panel Footer -------------- -->
+                    </form>
+                </div>
+                
+            </div>
+
 
         </section>
 {% endblock content %}
 {% block js %}
   {% load staticfiles %}
+   <!-- <script src="{% static "js/dsj-script.js"%}"></script> -->
+  <link rel="stylesheet" href="{% static "dataTables/css/jquery.dataTables.css"%}">
+  <link rel="stylesheet" href="{% static "dataTables/css/scroller.dataTables.css"%}">
+  <!-- <link rel="stylesheet" href="{% static "dataTables/css/keyTable.dataTables.css"%}"> -->
+
+  <script src="{% static "dataTables/js/jquery.dataTables.js"%}"></script>
+  <script src="{% static "dataTables/js/fnFilterClear.js"%}"></script>
+  <script src="{% static "dataTables/js/fnReloadAjax.js"%}"></script>
+  <script src="{% static "dataTables/js/dataTables.scroller.js"%}"></script>
+  <script src="{% static "dataTables/js/dataTables.keyTable.js"%}"></script>
+  
+  <script src="{% static "js/keynavigator.js"%}"></script>
   <script src="{% static "js/compras/compras.js"%}"></script>
   <script>
   $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });

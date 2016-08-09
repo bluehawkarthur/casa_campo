@@ -12,13 +12,17 @@ class Index(View):
 	def get(self, request, *args, **kwargs):
 
 		if not request.user.is_authenticated():
-			return HttpResponseRedirect(reverse_lazy('inicio'))
+			return HttpResponseRedirect(reverse_lazy('login'))
 		else:
-			return HttpResponseRedirect(reverse_lazy('main'))
+			return HttpResponseRedirect(reverse_lazy('inicio'))
 
 
 class Inicio(TemplateView):
 	template_name = 'inicio/index.html'
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(Inicio, self).dispatch(*args, **kwargs)
 
 
 class Main(TemplateView):
@@ -31,7 +35,7 @@ class Main(TemplateView):
 class LoginView(FormView):
 	form_class = LoginForm
 	template_name = "inicio/login.html"
-	success_url = reverse_lazy("main")
+	success_url = reverse_lazy("inicio")
 	print 'dasdfasdf'
 	
 	def form_valid(self, form):
@@ -46,4 +50,5 @@ class LogoutView(RedirectView):
 
 	def get(self, request, *args, **kwargs):
 		logout(request)
+		request.session.flush()
 		return super(LogoutView, self).get(request, *args, **kwargs)

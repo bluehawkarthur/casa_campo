@@ -27,6 +27,9 @@
     <!-- -------------- CSS - theme -------------- -->
     <link rel="stylesheet" type="text/css" href="{% static "skin/default_skin/css/theme.css"%}">
 
+
+    <link type="text/css" rel="stylesheet" href="{% static "css/style-print.css"%}" media="print"/>
+
     <!-- -------------- CSS - allcp forms -------------- -->
     <link rel="stylesheet" type="text/css" href="{% static "allcp/forms/css/forms.css"%}">
 
@@ -324,7 +327,7 @@
     <header class="navbar navbar-fixed-top bg-dark">
         <div class="navbar-logo-wrapper">
             <a class="navbar-logo-text" href="dashboard1.html">
-                <b>Alliance</b>
+                <b>Casa de Campo</b>
             </a>
             <span id="sidebar_left_toggle" class="ad ad-lines"></span>
         </div>
@@ -391,7 +394,7 @@
                                     <div id="nav-tab1" class="tab-pane active" role="tabpanel">
                                         <ul class="media-list" role="menu">
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/5.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/5.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -405,7 +408,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/2.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/2.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -419,7 +422,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/3.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/3.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -433,7 +436,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/4.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/4.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -447,7 +450,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/5.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/5.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -461,7 +464,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/2.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/2.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -475,7 +478,7 @@
                                                 </div>
                                             </li>
                                             <li class="media">
-                                                <a class="media-left" href="#"> <img src="assets/img/avatars/3.jpg"
+                                                <a class="media-left" href="#"> <img src="{% static "img/avatars/3.jpg"%}"
                                                                                      class="mw40 br2"
                                                                                      alt="avatar">
                                                 </a>
@@ -495,7 +498,7 @@
                                             <div class="media-left">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/3.jpg">
+                                                         src="{% static "img/avatars/3.jpg"%}">
                                                 </a>
                                             </div>
                                             <div class="media-body">
@@ -518,7 +521,7 @@
                                             <div class="media-right">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/1.jpg">
+                                                         src="{% static "img/avatars/1.jpg"%}">
                                                 </a>
                                             </div>
                                         </div>
@@ -526,7 +529,7 @@
                                             <div class="media-left">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/2.jpg">
+                                                         src="{% static "img/avatars/2.jpg"%}">
                                                 </a>
                                             </div>
                                             <div class="media-body">
@@ -550,7 +553,7 @@
                                             <div class="media-right">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/1.jpg">
+                                                         src="{% static "img/avatars/1.jpg"%}">
                                                 </a>
                                             </div>
                                         </div>
@@ -558,7 +561,7 @@
                                             <div class="media-left">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/2.jpg">
+                                                         src="{% static "img/avatars/2.jpg"%}">
                                                 </a>
                                             </div>
                                             <div class="media-body">
@@ -580,7 +583,7 @@
                                             <div class="media-right">
                                                 <a href="#">
                                                     <img class="media-object" alt="64x64"
-                                                         src="assets/img/avatars/1.jpg">
+                                                         src="{% static "img/avatars/1.jpg"%}">
                                                 </a>
                                             </div>
                                         </div>
@@ -859,24 +862,10 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown dropdown-fuse">
-                <div class="navbar-btn btn-group">
-                    <button data-toggle="dropdown" class="btn btn-md dropdown-toggle">
-                        EN
-                    </button>
-                    <ul class="dropdown-menu pv5 animated animated-short fadeIn" role="menu">
-                        <li>
-                            <a href="javascript:void(0);"> Spanish </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Italian </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            
             <li class="dropdown dropdown-fuse">
                 <a href="#" class="dropdown-toggle fw600" data-toggle="dropdown">
-                    <span class="hidden-xs"><name>Doug Adams</name> </span>
+                    <span class="hidden-xs"><name>{{user.username}}</name> </span>
                     <span class="fa fa-caret-down hidden-xs mr15"></span>
                     <img src="{% static "img/avatars/profile_avatar.jpg"%}" alt="avatar" class="mw55">
                 </a>
@@ -903,18 +892,7 @@
                             </select>
                         </div>
                     </li>
-                    <li class="list-group-item">
-                        <a href="#" class="animated animated-short fadeInUp">
-                            <span class="fa fa-envelope-o"></span> Messages
-                            <span class="label label-warning">54</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#" class="animated animated-short fadeInUp">
-                            <span class="fa fa-users"></span> Friends
-                            <span class="label label-warning">6</span>
-                        </a>
-                    </li>
+                    
                     <li class="list-group-item">
                         <a href="#" class="animated animated-short fadeInUp">
                             <span class="fa fa-bell"></span> Notifications </a>
@@ -925,8 +903,8 @@
                     </li>
                     <li class="dropdown-footer text-center">
                         <a href="#" class="btn btn-primary btn-sm btn-bordered">
-                        <li> <a class="fa fa-power-off pr5" href="/login"> Salir</a> </li>
-                        <span class="fa fa-power-off pr5" href="/logout"></span> Logout </a>
+                        <li> <a class="fa fa-power-off pr5" href="/logout"> Salir</a> </li>
+                        
                     </li>
                 </ul>
             </li>
@@ -938,7 +916,7 @@
     <aside id="sidebar_left" class="nano nano-light affix">
 
         <!-- -------------- Sidebar Left Wrapper  -------------- -->
-        <div class="sidebar-left-content nano-content">
+        <div class="sidebar-left-content nano-content reporte">
 
             <!-- -------------- Sidebar Header -------------- -->
             <header class="sidebar-header">
@@ -947,7 +925,7 @@
                 <div class="sidebar-widget author-widget">
                     <div class="media">
                         <a class="media-left" href="#">
-                            <img src="assets/img/avatars/profile_avatar.jpg" class="img-responsive">
+                            <img src="{% static "img/avatars/profile_avatar.jpg"%}" class="img-responsive">
                         </a>
 
                         <div class="media-body">
@@ -1006,11 +984,11 @@
 
 <!-- ------------..........................................................-- Sidebar Menu  -------------- -->
             <ul class="nav sidebar-menu">
-                <li class="sidebar-label pt30">Menu</li>
+                <li class="sidebar-label pt30">Producto</li>
 
                 <li class="active">
-                    <a class="accordion-toggle menu-open" href="/crearitem">
-                        <span class="fa fa-dashboard"></span>
+                    <a class="accordion-toggle menu-open" href="#">
+                        <span class="fa fa-building"></span>
                         <span class="sidebar-title">Item</span>
                         <span class="caret"></span>
                     </a>
@@ -1019,12 +997,16 @@
                             <a href="/crearitem">
                                 <span class="fa fa-file-text-o"></span>Crear Item</a>
                         </li>
+                        <li class="active">
+                            <a href="/listar_item">
+                                <span class="fa fa-file-text-o"></span>Lista Item</a>
+                        </li>
                     </ul>
                 </li>
-                <li class="sidebar-label pt25">Tools</li>
+                <li class="sidebar-label pt25">Proveedor</li>
                 <li>
                     <a class="accordion-toggle" href="#">
-                        <span class="fa fa-share-square-o"></span>
+                        <span class="fa fa-user"></span>
                         <span class="sidebar-title">Proveedor</span>
                         <span class="caret"></span>
                     </a>
@@ -1033,515 +1015,36 @@
                             <a href="/crear_proveed">
                                 <span class="glyphicon glyphicon-tags"></span>Crear Proveedor</a>
                         </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-desktop"></span>
-                        <span class="sidebar-title">Layout Templates</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
                         <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa fa-arrows-h"></span>
-                                Sidebars
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="sidebar-left-static.html">
-                                        Left Static </a>
-                                </li>
-                                <li>
-                                    <a href="sidebar-left-fixed.html">
-                                        Left Fixed </a>
-                                </li>
-                                <li>
-                                    <a href="sidebar-left-minified.html">
-                                        Left Minified </a>
-                                </li>
-                                <li>
-                                    <a href="sidebar-right-fixed.html">
-                                        Right Fixed </a>
-                                </li>
-                                <li>
-                                    <a href="sidebar-right-menu.html">
-                                        Right Static </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-arrows-v"></span>
-                                Navigation
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="navigation-static.html">
-                                        Static </a>
-                                </li>
-                                <li>
-                                    <a href="navigation-fixed.html">
-                                        Fixed </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-hand-o-up"></span>
-                                Top Panel
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="top-panel.html">
-                                        Default </a>
-                                </li>
-                                <li>
-                                    <a href="top-panel-menu.html">
-                                        With Menu </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-arrows-v"></span>
-                                Content
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="content-blank.html">
-                                        Blank </a>
-                                </li>
-                                <li>
-                                    <a href="content-fixed.html">
-                                        Fixed </a>
-                                </li>
-                                <li>
-                                    <a href="content-hero.html">
-                                        Hero Content </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-pause"></span>
-                                Content Chutes
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="chute-left.html">
-                                        Left Static </a>
-                                </li>
-                                <li>
-                                    <a href="chute-left-fixed.html">
-                                        Left Fixed </a>
-                                </li>
-                                <li>
-                                    <a href="chute-right.html">
-                                        Right Static </a>
-                                </li>
-                                <li>
-                                    <a href="chute-right-fixed.html">
-                                        Right Fixed </a>
-                                </li>
-                                <li>
-                                    <a href="chute-both.html">
-                                        Left &amp; Right Static </a>
-                                </li>
-                                <li>
-                                    <a href="chute-both-fixed.html">
-                                        Left &amp; Right Fixed </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-plus-square-o"></span>
-                                Boxed Frontpage
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="boxed-default.html">
-                                        Default </a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-boxed.html">
-                                        Optional Navigation </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-arrow-circle-o-up"></span>
-                                Horizontal Navigation
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="horizontal-navigation-small-menu.html">
-                                        Small Menu</a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-medium-menu.html">
-                                        Medium Menu</a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-large-menu.html">
-                                        Large Menu</a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-top-panel.html">
-                                        With Top panel</a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-collapsing-top-panel.html">
-                                        Collapsing Top panel</a>
-                                </li>
-                                <li>
-                                    <a href="horizontal-navigation-boxed.html">
-                                        Boxed Layout</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-wrench"></span>
-                        <span class="sidebar-title">Management Tools</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="management-tools-panels.html">
-                                <span class="glyphicon glyphicon-book"></span> Panels </a>
-                        </li>
-                        <li>
-                            <a href="management-tools-modals.html">
-                                <span class="glyphicon glyphicon-modal-window"></span> Modals </a>
-                        </li>
-                        <li>
-                            <a href="management-tools-dock.html">
-                                <span class="glyphicon glyphicon-equalizer"></span> Dock </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-check-square-o"></span>
-                        <span class="sidebar-title">Forms</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="forms-elements.html">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Elements </a>
-                        </li>
-                        <li>
-                            <a href="forms-widgets.html">
-                                <span class="glyphicon glyphicon-calendar"></span> Widgets </a>
-                        </li>
-                        <li>
-                            <a href="forms-layouts.html">
-                                <span class="fa fa-desktop"></span> Layouts </a>
-                        </li>
-                        <li>
-                            <a href="forms-wizard.html">
-                                <span class="fa fa-clipboard"></span> Wizard </a>
-                        </li>
-                        <li>
-                            <a href="forms-validation.html">
-                                <span class="glyphicon glyphicon-check"></span> Validation </a>
+                            <a href="/listar_proveed">
+                                <span class="glyphicon glyphicon-tags"></span>Lista Proveedor</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-label pt30">Elements</li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-cogs"></span>
-                        <span class="sidebar-title">Widgets</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="widgets-panels.html">
-                                <span class="fa fa-desktop"></span> Panels </a>
-                        </li>
-                        <li>
-                            <a href="widgets-scrollers-tiles.html">
-                                <span class="fa fa-columns"></span> Scrollers &amp; Tiles</a>
-                        </li>
-                        <li>
-                            <a href="widgets-tools.html">
-                                <span class="fa fa-dot-circle-o"></span> Tools </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="email-layouts.html">
-                        <span class="fa fa-envelope-o"></span>
-                        <span class="sidebar-title">Email Layouts</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-star-half-full "></span>
-                        <span class="sidebar-title">User Interface</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="user-interface-alerts.html">
-                                <span class="fa fa-warning"></span> Alerts </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-buttons.html">
-                                <span class="fa fa-plus-square-o"></span> Buttons </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-typography.html">
-                                <span class="fa fa-text-width"></span> Typography </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-panels.html">
-                                <span class="fa fa-archive"></span> Panels </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-progress-bars.html">
-                                <span class="fa fa-bars"></span> Progress Bars </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-tabs.html">
-                                <span class="fa fa-toggle-off"></span> Tabs </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-icons.html">
-                                <span class="fa fa-hand-o-right"></span> Icons </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-grid.html">
-                                <span class="fa fa-th-large"></span> Grid </a>
-                        </li>
-                        <li>
-                            <a href="user-interface-progress-loader.html">
-                                <span class="fa fa-th-large"></span> Page Progress Loader </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-tasks"></span>
-                        <span class="sidebar-title">User Forms</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="user-forms-standart-inputs.html">
-                                <span class="fa fa-magic"></span> Standart Inputs </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-additional-inputs.html">
-                                <span class="fa fa-bell-o"></span> Additional Inputs
-                            </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-editors.html">
-                                <span class="fa fa-clipboard"></span> Editors </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-treeview.html">
-                                <span class="fa fa-tree"></span> Treeview </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-nestable.html">
-                                <span class="fa fa-tasks"></span> Nestable </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-image-tools.html">
-                                <span class="fa fa-cloud-upload"></span> Image Tools
-                            </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-file-uploaders.html">
-                                <span class="fa fa-cloud-upload"></span> File Uploaders </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-notifications.html">
-                                <span class="fa fa-bell-o"></span> Notifications </a>
-                        </li>
-                        <li>
-                            <a href="user-forms-content-sliders.html">
-                                <span class="fa fa-exchange"></span> Content Sliders </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="accordion-toggle" href="#">
-                        <span class="fa fa-crop"></span>
-                        <span class="sidebar-title">Plugins</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="glyphicon glyphicon-globe"></span> Maps
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="maps-basic.html">Basic</a>
-                                </li>
-                                <li>
-                                    <a href="maps-vector.html">Vector</a>
-                                </li>
-                                <li>
-                                    <a href="maps-full.html">Full</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-area-chart"></span> Charts
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="charts-highcharts.html">Highcharts</a>
-                                </li>
-                                <li>
-                                    <a href="charts-d3.html">D3 Charts</a>
-                                </li>
-                                <li>
-                                    <a href="charts-flot.html">Flot Charts</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-table"></span> Tables
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="tables-basic.html"> Basic </a>
-                                </li>
-                                <li>
-                                    <a href="tables-datatables.html"> Data </a>
-                                </li>
-                                <li>
-                                    <a href="tables-sortable.html"> Sortable </a>
-                                </li>
-                                <li>
-                                    <a href="tables-pricing.html"> Pricing </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                <li class="sidebar-label pt30">Venta</li>
                 <li>
                     <a class="accordion-toggle" href="#">
                         <span class="fa fa-file-text-o"></span>
-                        <span class="sidebar-title">Pages</span>
+                        <span class="sidebar-title">Venta</span>
                         <span class="caret"></span>
                     </a>
                     <ul class="nav sub-nav">
                         <li>
                             <a class="accordion-toggle" href="#">
-                                <span class="fa fa-gears"></span> Utility
+                                <span class="fa fa-gears"></span> Venta
                                 <span class="caret"></span>
                             </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="utility-confirmation.html" target="_blank"> Confirmation </a>
-                                </li>
-                                <li>
-                                    <a href="utility-login.html" target="_blank"> Login </a>
-                                </li>
-                                <li>
-                                    <a href="utility-register.html" target="_blank"> Register </a>
-                                </li>
-                                <li>
-                                    <a href="utility-forgot-password.html" target="_blank"> Forgot Password </a>
-                                </li>
-                                <li>
-                                    <a href="utility-coming-soon.html" target="_blank"> Coming Soon
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="utility-404-error.html"> 404 Error </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="accordion-toggle" href="#">
-                                <span class="fa fa-desktop"></span> Basic
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="nav sub-nav">
-                                <li>
-                                    <a href="basic-search-results.html">Search Results </a>
-                                </li>
-                                <li>
-                                    <a href="basic-profile.html"> Profile </a>
-                                </li>
-                                <li>
-                                    <a href="basic-timeline.html"> Timeline </a>
-                                </li>
-                                <li>
-                                    <a href="basic-faq-page.html"> FAQ Page </a>
-                                </li>
-                                <li>
-                                    <a href="basic-calendar.html"> Calendar </a>
-                                </li>
-                                <li>
-                                    <a href="basic-messages.html"> Messages </a>
-                                </li>
-                                <li>
-                                    <a href="basic-gallery.html"> Gallery </a>
-                                </li>
-                                <li>
-                                    <a href="basic-invoice.html"> Invoice </a>
-                                </li>
-                            </ul>
+
                         </li>
                     </ul>
                 </li>
 
 
                 <li>
-                    <a href="doc/index.html">
+                    <a href="#">
                         <span class="fa fa-book"></span>
                         <span class="sidebar-title">Documentation</span>
-                    </a>
-                </li>
-
-                <!-- -------------- Sidebar Progress Bars -------------- -->
-                <li class="sidebar-label pt25 pb15">Stats</li>
-                <li class="sidebar-stat">
-                    <a href="#" class="fs11">
-                        <span class="fa fa-calendar-o text-info"></span>
-                        <span class="sidebar-title text-muted">September earnings</span>
-                        <span class="pull-right mr20 text-muted">$1158</span>
-
-                        <div id="high-column4" style="height: 150px;"></div>
-                    </a>
-                </li>
-                <li class="sidebar-stat">
-                    <a href="#" class="fs11">
-                        <span class="fa fa-calendar text-info"></span>
-                        <span class="sidebar-title text-muted">August earnings</span>
-                        <span class="pull-right mr20 text-muted">$1001</span>
-
-                        <div id="high-column5" style="height: 150px;"></div>
                     </a>
                 </li>
             </ul>
@@ -1608,7 +1111,7 @@
         <!-- -------------- /Topbar Menu Wrapper -------------- -->
 
         <!-- -------------- Topbar -------------- -->
-        <header id="topbar" class="alt">
+        <header id="topbar" class="alt reporte">
             <div class="topbar-left">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-icon">
@@ -1653,11 +1156,10 @@
         
 
         <!-- -------------- Page Footer -------------- -->
-        <footer id="content-footer" class="affix">
+        <footer id="content-footer" class="affix reporte">
             <div class="row">
                 <div class="col-md-6">
-                    <span class="footer-legal">© 2015 Bluc. <a href="#">Therms of use</a> and <a
-                            href="#">Privacy policy</a></span>
+                    <span class="footer-legal">© 2016 Bluc. <a href="https://mail.google.com/">BlueHawksoftwareDevelopment@gmail.com</a> and <a href="#">Privacy policy</a></span>
                 </div>
                 <div class="col-md-6 text-right">
                     <span class="footer-meta"></span>
@@ -1760,6 +1262,7 @@
 <!-- -------------- jQuery -------------- -->
 <script src="{% static "js/jquery/jquery-1.11.3.min.js"%}"></script>
 <script src="{% static "js/jquery/jquery_ui/jquery-ui.min.js"%}"></script>
+<script src="{% static "js/jquery.validate.js"%}"></script>
 
 <!-- -------------- HighCharts Plugin -------------- -->
 <script src="{% static "js/plugins/highcharts/highcharts.js"%}"></script>
@@ -1788,6 +1291,9 @@
 <script src="{% static "js/utility/utility.js"%}"></script>
 <script src="{% static "js/demo/demo.js"%}"></script>
 <script src="{% static "js/main.js"%}"></script>
+
+<script src="{% static "js/plugins/magnific/jquery.magnific-popup.js"%}"></script>
+
 
 <!-- -------------- Widget JS -------------- -->
 <script src="{% static "js/demo/widgets.js"%}"></script>

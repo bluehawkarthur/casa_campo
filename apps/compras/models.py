@@ -20,7 +20,7 @@ class Compras(models.Model):
 
 class DetalleCompra(models.Model):
 	codigo = models.CharField(max_length=50)
-	unidad = models.IntegerField()
+	unidad = models.CharField(max_length=100)
 	descripcion = models.CharField(max_length=100)
 	cantidad = models.IntegerField()
 	pr_costo = models.IntegerField()
