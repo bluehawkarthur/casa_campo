@@ -28,4 +28,7 @@ urlpatterns = [
     url(r'^', include('apps.proveedor.urls'), name='proveedor'),
     url(r'^', include('apps.compras.urls'), name='proveedor'),
 
+    # PERSONAL
+    url(r'^', include('apps.personal.urls'), name='personal'),
+
 ]

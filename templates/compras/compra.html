@@ -89,15 +89,17 @@
 
                   
                     <div class="allcp-form">
-                        
+                      <form  id="encabezado">
+                      <div class="row mb10">
                         <div class="col-md-3 ph10 mb5">
                           
-                            <label for="username" class="field-label">Comprob.</label>
-                            <label for="comprobante" class="field ">
-                                <input type="text" name="comprobante" id="comprobante" class="gui-input" placeholder="Comprobante..." value="{{comprobante}}">
-                                
-                            </label>
-                            
+                          <label for="username" class="field-label">Comprob.</label>
+                          <label for="comprobante" class="field ">
+                              <input type="text" name="comprobantetxt" id="comprobantetxt" class="gui-input" placeholder="Comprobante..." value="">
+                               <input type="hidden" name="comprobante" id="comprobante" class="gui-input" placeholder="Comprobante..." value="{{comprobante}}">
+                               <input type="hidden" name="pk_comprobante" id="pk_comprobante" class="gui-input">
+                              
+                          </label>
                         </div>
                         <div class="col-md-3 ph10 mb5">
                             <label for="username" class="field-label">Proveedor</label>
@@ -105,7 +107,6 @@
                                 <input type="text" name="proveedor" id="proveedor" class="gui-input" placeholder="codigo">
 
                                 <input type="hidden" id="pk_proveedor">
-            
                             </label>
                         </div>
                         <div class="col-md-3 ph10 mb5">
@@ -123,6 +124,8 @@
                             </label>
 
                         </div>
+                      </div>
+                      <div class="row mb10">
                         <div class="col-md-3 ph10 mb5">
                             <label for="username" class="field-label">Factura</label>
                             <label for="factura" class="field ">
@@ -131,30 +134,55 @@
                             </label>
                         </div>
 
-                        <div class="col-md-6 ph10 mb5">
+                        <div class="col-md-4 ph10 mb5">
                             <label for="username" class="field-label">Nombre</label>
                             <label for="nombre" class="field ">
                                 <input type="text" name="nombre" id="nombre" class="gui-input" placeholder="Last name...">
             
                             </label>
                         </div>
-                        <div class="col-md-3 ph10 mb5">
-                         
+                        <div class="col-md-5 ph10 mb5">
                           <div class="tipo-compra">
+                            
+                            <div class="bs-options">
                             <div class="bs-component">
-                                <div class="radio-custom radio-primary mb10">
-                                    <input type="radio" id="radioExample1" name="tipodcompra" checked="" value="credito">
-                                    <label for="radioExample1">Credito</label>
-                                </div>
+                              <div class="radio-custom radio-primary mb10">
+                                <input type="radio" id="radioExample1" name="tipodcompra" checked="" value="credito">
+                                <label for="radioExample1">Credito</label>
+                              </div>
                             </div>
                             <div class="bs-component">
-                                <div class="radio-custom radio-primary">
-                                    <input type="radio" id="radioExample2" name="tipodcompra" value="contado">
-                                    <label for="radioExample2">Contado</label>
-                                </div>
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="radioExample2" name="tipodcompra" value="contado">
+                                <label for="radioExample2">Contado</label>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="bs-options">
+                            <div class="bs-component">
+                              <div class="radio-custom radio-primary mb10">
+                                <input type="radio" id="radioExample3" name="tipodcompra2" checked="" value="reg_simplf">
+                                <label for="radioExample3">Reg Simplif</label>
+                              </div>
+                            </div>
+                            <div class="bs-component">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="radioExample4" name="tipodcompra2" value="retencion">
+                                <label for="radioExample4">Retencion</label>
+                              </div>
+                            </div>
+                            <div class="bs-component">
+                              <div class="radio-custom radio-primary">
+                                <input type="radio" id="radioExample5" name="tipodcompra2" value="otros">
+                                <label for="radioExample5">Otros</label>
+                              </div>
+                            </div>
                             </div>
                           </div>
                         </div>
+                      </div>
+                      </form>
+                        
                         
                         <div class="casilla-productos">
                           <div class="col-md-2 ph10 mb5">
@@ -235,15 +263,16 @@
                             <form method="POST">
                               
                               <div class="basic-invoice-buttons">
-                              <a href="#" onclick="deleteAll();" class="btn btn-danger  mb5 reporte"><i class="fa fa-minus-square pr5"></i>Borrar</a>
-                                  <a href="javascript:window.print('ttutu')" class="btn btn-default  mb5 reporte">
+                              <a  onclick="deleteAll();" class="btn btn-warning  mb5 reporte"><i class="fa fa-minus-square pr5"></i>Limpiar/Nuevo</a>
+                                  <a onclick="Imprimir();" class="btn btn-system  mb5 reporte" id="imprimir" disabled>
                                       <i class="fa fa-print pr5"></i> Imprimir</a>
 
                                   
                                       <input id="proceso" name="proceso" type="hidden" />
                                       <!--  <button class="btn btn-primary mb5" id="save"  name="action"><i class="fa fa-floppy-o pr5"></i> Terminar
                                         </button> -->
-                                        <a  class="btn btn-primary mb5 reporte" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>                 
+                                        <a  class="btn btn-primary mb5 reporte" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>  
+                                        <a  onclick="deleteAll();" class="btn btn-danger  mb5 reporte" disabled><i class="fa fa-trash-o pr5"></i>Eliminar</a>               
                                   
                               </div>
                             </form>
@@ -335,6 +364,47 @@
                     </div>
                 </div>
             </div>
+
+
+            <div id="item-lista" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                        <span class="panel-title"> Lista Item </span>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="mt5"> Proveedor Nuevo</h3>
+                     
+                        <div class="table-responsive">
+                          <table class="table" id="tb-item">
+                              <thead class="bloquet">
+                              <tr class="primary">
+                                  <th data-type="filter" class="with-cell">pk</th>
+                                  <th data-type="filter" class="with-cell">Codigo</th>
+                                  <th data-type="filter" class="with-cell">Descripcion</th>
+                                  <th data-type="filter" class="with-cell">Unidad</th>
+                                  <th data-type="filter" class="with-cell">pr_costo</th>
+
+                              </tr>
+                              </thead>
+                              <tbody class="bloquet bodytable">
+                              
+                              </tbody>
+                          </table>
+                        </div>
+
+                        
+                    </div>
+                    <div class="panel-footer text-right">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
 
 
             
@@ -487,9 +557,28 @@
   <script src="{% static "dataTables/js/dataTables.keyTable.js"%}"></script>
   
   <script src="{% static "js/keynavigator.js"%}"></script>
+  <script src="{% static "js/table-edits.min.js"%}"></script>
   <script src="{% static "js/compras/compras.js"%}"></script>
   <script>
   $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  </script>
+  <script>
+  var comp = $('#comprobante').val();
+  var comptxt = comp.toString();
+  var lencomp = comptxt.length;
+  while(lencomp < 8){
+    comptxt = '0'.concat(comptxt);
+    lencomp = lencomp+1;
+  } 
+  $('#comprobantetxt').val(comptxt);
+  $('#factura').val(0);
+
+  window.onbeforeunload = function() {
+    localStorage.setItem(proveedor, $('#proveedor').val());
+    localStorage.setItem(grupo, $('#grupo').val());
+    localStorage.setItem(factura, $('#factura').val());
+   
+}
   </script>
     
 {% endblock js %}

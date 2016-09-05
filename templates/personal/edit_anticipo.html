@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+
+<section id="content" class="table-layout">
+  <div class="chute chute-center" style="height: 762px;">
+    <div class="allcp-form theme-primary mw1000 center-block pb175">
+      <div class="panel panel-primary">
+          <form class=""  method="POST" enctype='multipart/form-data' novalidate="novalidate">{% csrf_token %}
+              <div class="panel-heading">
+                  <div class="panel-title">
+                      Registro de Anticipo
+                  </div>
+              </div>
+
+              <div class="panel-body">
+                  <div class="section row">
+                      <div class="col-md-6 ph10 mb5">
+                          <label class="field select {% if form.errors.codigo %} state-error {% endif %}">
+                              {{form.codigo|add_class:"gui-input"|attr:"placeholder:codigo"}}
+                              <i class="arrow"></i>
+                          </label><em class="state-error">{{ form.errors.codigo|removetags:'ul li' }}</em>
+                      </div>
+
+                      <div class="col-md-6 ph10 mb5">
+                          <label class="field prepend-icon {% if form.errors.nombre %} state-error {% endif %}">
+                              <input id='id_nombre' type='text' class='gui-input'></input>
+                              <label class="field-icon"><i class="fa fa-user"></i></label>
+                          </label><em class="state-error">{{ form.errors.nombre|removetags:'ul li' }}</em>
+                      </div>
+                  </div>
+                  <div class="section row">
+                     <div class="col-md-6 ph10 mb5">
+                          <label class="field prepend-icon {% if form.errors.anticipo %} state-error {% endif %}">
+                              {{form.anticipo|add_class:"gui-input"|attr:"placeholder:anticipo"}}
+                              <label class="field-icon"><i class="fa fa-user"></i></label>
+                          </label><em class="state-error">{{ form.errors.anticipo|removetags:'ul li' }}</em>
+                      </div>
+
+                      <div class="col-md-6 ph10 mb5">
+                          <label class="field prepend-icon {% if form.errors.fecha %} state-error {% endif %}">
+                              {{form.fecha|add_class:"gui-input"|attr:"placeholder:fecha"}}
+                              <label class="field-icon"><i class="fa fa-user"></i></label>
+                          </label><em class="state-error">{{ form.errors.fecha|removetags:'ul li' }}</em>
+                      </div>
+                  </div>
+   
+              </div>
+              <div class="panel-footer text-right">
+                  <button type="submit" class="btn btn-bordered btn-primary mb5"> Guardar</button>
+                  <a href="/listar_anticipos" class="btn btn-bordered btn-primary mb5">Volver  Atras</a>
+              </div>
+             
+          </form>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock content %}
+{% block js %}
+    <script>
+    var cod2 = $('select option:selected').val();
+    console.log('EL CODIGOOOOOO', cod2);
+    if (cod2 == cod2) {
+      $.ajax({
+        data: {'cod2': cod2},
+        url: '/busqueda_nombre/',
+        type: 'get',
+        success: function(data){
+          console.log('recibo en el cliente success:', data[0].fields.nombre);
+          $('#id_nombre').val(data[0].fields.nombre);
+
+        }
+      });
+    }
+    //para cambiarfel nombre    
+    //var cod = $('select').find('option:eq(0)');
+    //cod.text('Codigo');
+    $('select').on('change', buscar);
+    function buscar() {
+      var id = $(this).val();
+      $.ajax({
+        data: {'id': id},
+        url: '/busqueda_personal/',
+        type: 'get',
+        success: function(data){
+          $('#id_nombre').val(data[0].fields.nombre);
+
+        }
+      });
+    }
+
+    $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    </script>
+ 
+{% endblock js %}
+  

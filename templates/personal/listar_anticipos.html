@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+<section id="content" class="table-layout">
+    <div class="chute chute-center" style="height: 930px;">
+        <div class="panel" id="spy5">
+            <div class="panel-heading">
+        <a href="/crear_anticipo" class="btn btn-bordered btn-primary mb5">Agregar</a>
+                <span class="panel-title">Lista de Anticipos</span>
+                <div class="pull-right hidden-xs">
+                    <code class="mr20"></code>
+                </div>
+
+            </div>
+            <div class="panel-body pn">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <div class="bs-component">
+                            <table class="table table-bordered mbn">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Nombre</th>
+                                        <th>Anticipo</th>
+                                        <th>Tipo</th>
+                                        <th>Fecha</th>
+                                        <th>Modificar</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ant in anticipo %}
+                                    <tr>
+                                        <td>{{ant.codigo.codigo}}</td>
+                                        <td>{{ant.codigo.nombre}}</td>
+                                        <td>{{ant.anticipo}}</td>
+                                        <td>{{ant.codigo.tipo}}</td>
+                                        <td>{{ant.fecha}}</td>
+                                    <td>
+                                        <a class="btn btn-alert" href="/edit_anticipo/{{ant.id}}"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                      <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#modalDel{{ant.id}}"><i class="fa fa-trash-o text"></i></a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalDel{{ant.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Eliminar de Personal</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <p class="img-dashboard">Esta seguro que quiere eliminar " {{ant.codigo.nombre}} "?</p>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                           
+                                                <a href="/delete_anticipo/{{ant.id}}" class="btn btn-primary">Eliminar</a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    {% endfor %}   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

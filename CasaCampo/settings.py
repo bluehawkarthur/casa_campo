@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'apps.compras',
     'apps.proveedor',
     'apps.inicio',
+    'apps.personal',
     # librerias
     'widget_tweaks',
 

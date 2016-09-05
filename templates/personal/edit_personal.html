@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+
+<section id="content" class="table-layout">
+            <div class="chute chute-center" style="height: 762px;">
+                <div class="allcp-form theme-primary mw1000 center-block pb175">
+                    <div class="panel panel-primary">
+                        <form class=""  method="POST" enctype='multipart/form-data' novalidate="novalidate">{% csrf_token %}
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    Modificar datos de Personal
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="section row">
+
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label>{{form.codigo.label}}</label>
+                                        <label class="field prepend-icon {% if form.errors.codigo %} state-error {% endif %}">
+                                            {{form.codigo|add_class:"gui-input"|attr:"placeholder:codigo"}}
+                                            <label class="field-icon"><i class="fa fa-user"></i></label>
+                                        </label><em class="state-error">{{ form.errors.codigo|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                    <label>{{form.nombre.label}}</label>
+                                        <label class="field prepend-icon {% if form.errors.nombre %} state-error {% endif %}">
+                                            {{form.nombre|add_class:"gui-input"|attr:"placeholder:nombre"}}
+                                            <label class="field-icon"><i class="fa fa-user"></i></label>
+                                        </label><em class="state-error">{{ form.errors.nombre|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                    <label>{{form.porcentaje.label}}</label>
+                                        <label class="field prepend-icon {% if form.errors.porcentaje %} state-error {% endif %}">
+                                            {{form.porcentaje|add_class:"gui-input"|attr:"placeholder:porcentaje"}}
+                                            <label class="field-icon"><i class="fa fa-user"></i></label>
+                                        </label><em class="state-error">{{ form.errors.porcentaje|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                    <label>{{form.tipo.label}}</label>
+                                        <label class="field prepend-icon {% if form.errors.tipo %} state-error {% endif %}">
+                                            {{form.tipo|add_class:"gui-input"|attr:"placeholder:tipo"}}
+                                            <label class="field-icon"><i class="fa fa-user"></i></label>
+                                        </label><em class="state-error">{{ form.errors.tipo|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                 
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button type="submit" class="btn btn-bordered btn-primary mb5"> Guardar</button>
+                                <a href="/listar_personal" class="btn btn-bordered btn-primary mb5">Volver  Atras</a>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+</section>
+
+{% endblock content %}
+
+	
