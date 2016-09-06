@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response as render, redirect
 from django.template import RequestContext as ctx
 from django.forms.models import inlineformset_factory
 from django.views.generic import TemplateView, ListView
-from .models import Compras, DetalleCompra
+from .models import Compras, DetalleCompra, ComprasHistory, DetalleCompraHystory
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.core import serializers
@@ -13,6 +13,7 @@ from django.db import transaction
 from django.contrib import messages
 from apps.item.models import Item
 from apps.proveedor.models import Proveedor
+from apps.reportes.models import KardexAlmacen, KardexProveedor
 import decimal
 # from apps.reportes.htmltopdf import render_to_pdf
 from datetime import date
@@ -246,9 +247,44 @@ def compraCrear(request):
                     "cantidad": crearDetalle.cantidad,
                     "pr_costo": crearDetalle.pr_costo
                 })
-                
+
+                # Guarda en el kardex de ALMACEN
+                regKardex = KardexAlmacen(
+                    codigo=Item.objects.get(id=k['pk']),
+                    fecha=date_1,
+                    tipo= 1,# Define el tipo de transaccion, ej compra, venta
+                    cantidad=int(k['cantidad']),
+                    pr_costo=decimal.Decimal(k['pr_costo']),
+                    comprobantetxt=proceso['comprobantetxt'],
+                    comprobante=proceso['comprobante'],
+                    factura=proceso['factura'],
+                    tipodcompra=proceso['tipodcompra'],
+                    tipodcompra2=proceso['tipodcompra2'],
+                    grupo=proceso['grupo'],
+                    proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                    #hora=
+                )
+                regKardex.save()
+
+                # Guarda en el kardex de PROVEEDOR
+                proKardex = KardexAlmacen(
+                    codigo=Item.objects.get(id=k['pk']),
+                    fecha=date_1,
+                    tipo= 1,# Define el tipo de transaccion, ej compra, venta
+                    cantidad=int(k['cantidad']),
+                    pr_costo=decimal.Decimal(k['pr_costo']),
+                    comprobantetxt=proceso['comprobantetxt'],
+                    comprobante=proceso['comprobante'],
+                    factura=proceso['factura'],
+                    tipodcompra=proceso['tipodcompra'],
+                    tipodcompra2=proceso['tipodcompra2'],
+                    grupo=proceso['grupo'],
+                    proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                    #hora=
+                )
+                regKardex.save()
                 numero = proceso['comprobante']
-                
+
 
 
             comprobante = {'comprobante': numero, 'pk_comprobante': crearCompra.pk, 'detalle': vd}
@@ -368,6 +404,45 @@ def addItem(request):
     item.save()
     print 'llegoooo aaaaquiiii'
     data = {'pk': item.pk, 'codigo': item.codigo, 'unidad': item.unidad, 'descripcion': item.descripcion, 'cantidad': item.cantidad, 'pr_costo': item.pr_costo}
+    print 'guardoooooooo'
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def DeleteCompra(request):
+  if request.method == 'POST':
+    compra = Compras.objects.filter(id=request.POST['pk'])
+    detalle = DetalleCompra.objects.filter(compras=compra)
+    crearCompra = ComprasHistory(
+        comprobante=compra[0].comprobante,
+        comprobantetxt=compra[0].comprobantetxt,
+        factura=compra[0].factura,
+        fecha=compra[0].fecha,
+        tipodcompra=compra[0].tipodcompra,
+        tipodcompra2=compra[0].tipodcompra2,
+        grupo=compra[0].grupo,
+        total=compra[0].total,
+        proveedor=compra[0].proveedor,
+        fecha_accion=date.today(),
+        user=request.user,
+    )
+    crearCompra.save()
+
+    for d in detalle:
+        crearDetalle = DetalleCompraHystory(
+            compras=crearCompra,
+            codigo=d.codigo,
+            unidad=d.unidad,
+            descripcion=d.descripcion,
+            cantidad=d.cantidad,
+            pr_costo=d.pr_costo,
+            item=d.item,
+        )
+        crearDetalle.save()
+
+    compra.delete()
+
+    print 'llegoooo aaaaquiiii'
+    data = {'pk': request.POST['pk']}
     print 'guardoooooooo'
     return HttpResponse(json.dumps(data), content_type='application/json')
 

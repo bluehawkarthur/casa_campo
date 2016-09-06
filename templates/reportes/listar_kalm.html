@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+<section id="content" class="table-layout">
+    <div class="chute chute-center" style="height: 930px;">
+        <div class="panel" id="spy5">
+            <div class="panel-heading">
+                <span class="panel-title">Kardex de Almacen</span>
+                <div class="pull-right hidden-xs">
+                    <code class="mr20"></code>
+                </div>
+
+            </div>
+            <div class="panel-body pn">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <div class="bs-component">
+                            <table class="table table-bordered mbn">
+                                <thead>
+                                    <tr>
+                                        <th>codigo</th>
+                                        <th>Fecha</th>
+                                        <th>Tipo</th>
+                                        <th>Cantidad</th>
+                                        <th>Pr. Costo</th>
+                                        <th>Docum.</th>
+                                        <th>Factura</th>
+                                        <th>Prov.</th>
+                                        <th>Grupo</th>
+                                        <th>Hora</th>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for k in kalm %}
+                                    <tr>
+                                        <td>{{ k.codigo}}</td>
+                                        <td>{{ k.fecha}}</td>
+                                        <td>{{ k.tipo}}</td>
+                                        <td>{{ k.cantidad}}</td>
+                                        <td>{{ k.pr_costo}}</td>
+                                        <td>{{ k.comprobantetxt}}</td>
+                                        <td>{{ k.factura}}</td>
+                                        <td>{{ k.proveedor}}</td>
+                                        <td>{{ k.grupo}}</td>
+                                        <td>{{ k.hora}}</td>
+                                        
+
+                                    <td>
+                                        <a class="btn btn-alert" href="/edit_kalm/{{k.id}}"><i class="fa fa-edit"></i></a>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#modalDel{{prov.id}}"><i class="fa fa-trash-o text"></i></a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalDel{{prov.id}}" tabindex="-1"ole="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h3 class="modal-title" id="myModalLabel">Eliminar de Kardex de Articulos</h3>
+                                            </div>
+                                            <h4><div class="modal-body">
+                                                <p class="img-dashboard" >Esta seguro que quiere eliminar "{{k.codigo}}"</p>
+                                            </div></h4>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+
+                                                <a href="/delete_kalm/{{k.id}}" class="btn btn-primary">Eliminar</a>
+                                                <!--a href="/delete_proveedor/{{prov.id}}" class="btn btn-primary">Eliminar</a-->
+                                            </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                   
+                                    
+                                    </tr>
+                                    {% endfor %}   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

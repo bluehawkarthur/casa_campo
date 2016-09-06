@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'apps.proveedor',
     'apps.inicio',
     'apps.personal',
+    'apps.reportes',
     # librerias
     'widget_tweaks',
 

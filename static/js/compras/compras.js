@@ -269,6 +269,7 @@ $( "#comprobantetxt" ).autocomplete({
       
       TableEdit();
       $('#imprimir').attr('disabled', false);
+      $('#elimnar-compra').attr('disabled', false);
       
       return false;
     },      
@@ -1354,6 +1355,8 @@ function deleteAll() {
     });
 
     $('#imprimir').attr('disabled', true);
+    $('#elimnar-compra').attr('disabled', true);
+
 
 }
 
@@ -1408,6 +1411,33 @@ function Imprimir(){
 
 }
 
+function EliminarCompra(){
+  var pk = $('#pk_comprobante').val();
+  $.ajax({
+      type: "POST",
+      url: "/eliminar_compra/",
+      dataType: "json",
+      data: {'pk': pk},
+      success: function(data) {
+         console.log(data);
+         deleteAll();
+         new PNotify({
+              title: "Eliminado",
+              text: "La compra se elimino correctamente",
+              addclass: "stack-custom",
+              type: 'success',
+              width: '100%',
+              shadow: true,
+              delay: 2500,
+              stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
+                          
+        });
+        
+        
+         
+    }
+  }); 
+}
 
 
   //         $( "#add_nit" ).autocomplete({

@@ -31,4 +31,6 @@ urlpatterns = [
     # PERSONAL
     url(r'^', include('apps.personal.urls'), name='personal'),
 
+    # REPORTES
+    url(r'^', include('apps.reportes.urls'), name='reportes'),
 ]

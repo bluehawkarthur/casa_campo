@@ -19,6 +19,8 @@ urlpatterns = [
     # url(r'^crearitem/$', 'apps.item.views.CrearItem', name='crearitem'),
     # url(r'^listar_item/', ListarItem.as_view(), name='listar_item'),
     url(r'^detalle_compra/(?P<pk>\d+)$', 'apps.compras.views.detalleCompra', name='detalle_compra'),
+    url(r'^eliminar_compra/$', 'apps.compras.views.DeleteCompra', name='eliminar_compra'),
+    
     # url(r'^edit_item/(?P<pk>\d+)$', EditItem.as_view(), name='edit_item'),
     # url(r'^delete_item/(?P<item>\d+)$', 'apps.item.views.DeleteItem', name='item_delete'),
 

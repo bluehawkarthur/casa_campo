@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+
+<section id="content" class="table-layout">
+            <div class="chute chute-center" style="height: 762px;">
+                <div class="allcp-form theme-primary mw1000 center-block pb175">
+                    <div class="panel panel-primary">
+                        <form class=""  method="POST" enctype='multipart/form-data' novalidate="novalidate">{% csrf_token %}
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    Editar Kardex de Almacen
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="codigo" class="field prepend-icon {% if form.errors.codigo %} state-error {% endif %}">
+                                            <label for="codigo" class="">Codigo</label>
+                                            {{form.codigo|add_class:"gui-input"|attr:"placeholder:codigo"}}
+                                        </label><em for="codigo" class="state-error">{{ form.errors.codigo|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="fecha" class="field prepend-icon {% if form.errors.fecha %} state-error {% endif %}">
+                                            <label for="fecha" class="">Fecha</label>
+                                            {{form.fecha|add_class:"gui-input"|attr:"placeholder:fecha" |add_class:"kk"}}
+                                        </label><em for="fecha" class="state-error">{{ form.errors.fecha|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="tipo" class="field prepend-icon {% if form.errors.tipo %} state-error {% endif %}">
+                                            <label for="tipo" class="">Tipo</label>
+                                            {{form.tipo|add_class:"gui-input"|attr:"placeholder:tipo" |add_class:"kk"}}
+                                        </label><em for="tipo" class="state-error">{{ form.errors.tipo|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="cantidad" class="field prepend-icon {% if form.errors.cantidad %} state-error {% endif %}">
+                                            <label for="cantidad" class="">Cantidad</label>
+                                            {{form.cantidad|add_class:"gui-input"|attr:"placeholder:cantidad" |add_class:"kk"}}
+                                        </label><em for="cantidad" class="state-error">{{ form.errors.cantidad|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="pr_costo" class="field prepend-icon {% if form.errors.pr_costo %} state-error {% endif %}">
+                                            <label for="pr_costo" class="">Precio de Costo</label>
+                                            {{form.pr_costo|add_class:"gui-input"|attr:"placeholder:pr_costo" |add_class:"kk"}}
+                                        </label><em for="pr_costo" class="state-error">{{ form.errors.pr_costo|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="comprobantetxt" class="field prepend-icon {% if form.errors.comprobantetxt %} state-error {% endif %}">
+                                            <label for="comprobantetxt" class="">Comprobante</label>
+                                            {{form.comprobantetxt|add_class:"gui-input"|attr:"placeholder:comprobantetxt" |add_class:"kk"}}
+                                        </label><em for="comprobantetxt" class="state-error">{{ form.errors.comprobantetxt|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="factura" class="field prepend-icon {% if form.errors.factura %} state-error {% endif %}">
+                                            {{form.factura|add_class:"gui-input"|attr:"placeholder:factura" |add_class:"kk"}}
+                                            <label for="factura" class="">Factura</label>
+                                        </label><em for="factura" class="state-error">{{ form.errors.factura|removetags:'ul li' }}</em>
+                                    </div>
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="proveedor" class="field prepend-icon {% if form.errors.proveedor %} state-error {% endif %}">
+                                            <label for="proveedor" class="">Proveedor</label>
+                                            {{form.proveedor|add_class:"gui-input"|attr:"placeholder:proveedor" |add_class:"kk"}}
+                                        </label><em for="proveedor" class="state-error">{{ form.errors.proveedor|removetags:'ul li' }}</em>
+                                    </div>
+                                </div>
+                                <div class="section row">
+                                    <div class="col-md-6 ph10 mb5">
+                                        <label for="grupo" class="field prepend-icon {% if form.errors.grupo %} state-error {% endif %}">
+                                            <label for="grupo" class="">Grupo</label>
+                                            {{form.grupo|add_class:"gui-input"|attr:"placeholder:grupo" |add_class:"kk"}}
+                                        </label><em for="grupo" class="state-error">{{ form.errors.grupo|removetags:'ul li' }}</em>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button type="submit" class="btn btn-bordered btn-primary mb5"> Guardar</button>
+                                <a href="/lista_kalm" class="btn btn-bordered btn-primary mb5">Volver  Atras</a>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+</section>
+
+{% endblock content %}
+
+	
