@@ -1,0 +1,17 @@
+/*  fix segundo lista desplegable menu    */
+
+.fix-second-menu {
+	color: red;
+}
+
+/*   COMPRAS      */
+.tipo-compra hr {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.bs-options {
+	display: inline-block;
+	float: left;
+	padding-right: inherit;
+}

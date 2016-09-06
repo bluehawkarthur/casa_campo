@@ -8,7 +8,27 @@ var today = (day)+"/"+(month)+"/"+now.getFullYear() ;
 
 $('#datepicker1').val(today);
 
+var total = 0;
+function calTotal(){
+    var total=0;
+    var t=0;
+    $('#tb-detalle tbody tr').each(function () {
+        total = total*1 + $(this).find("td").eq(5).html()*1;  
+        
+        if (!isNaN(total)) {
+          t = t*1 + $(this).find("td").eq(5).html()*1; 
+          
+        };
+    });
 
+    $('#sum-subtotal').text(t.toFixed(2));
+    
+    $('#sum-tax').text(t.toFixed(2));
+
+    $('#sum-total').text(total.toFixed(2));
+
+
+}
 // funcion para resetear la tabla
 function resetDetalle() {  
     var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
@@ -17,9 +37,11 @@ function resetDetalle() {
     if (t.rows.length > 1){    
       //funcion para eliminar tr por el id 
      function  deleteRow(id) {
+      if (document.getElementById(id)) {
         document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
         document.getElementById(id)
         );
+      }
      }
 
      // for para contar los tr y eliminarlos
@@ -37,16 +59,99 @@ function resetDetalle() {
 }
 
 
+// funcion para cambiar el item en el array eliminar ====
+  function changeDelete( value, texto) {
+     for (var i in proceso.producto) {
+        console.log('llego  a la funcion');
+       if (proceso.producto[i].pk == value) {
+          proceso.producto[i].accion = texto;
+          break; //Stop this loop, we found it!
+       }
+     }
+  }
 // para eliminar los tr de la tabla =====================
 function deleteRow(r) {
+
     var i = r.parentNode.parentNode.rowIndex;
     document.getElementById("tb-detalle").deleteRow(i);
+    var pk = $(r).attr("data-pk");
+    console.log(pk);
+    changeDelete(pk ,"eliminar");
+    calTotal();
+    console.log(proceso.producto);
 }
 
+ // funcion para cambiar el item en el array
+function changeItem( value, cantidad, pr_costo, subtotal) {
+   for (var i in proceso.producto) {
+      console.log('llego  a la funcion');
+     if (proceso.producto[i].pk == value) {
+        proceso.producto[i].cantidad = parseFloat(cantidad);
+        proceso.producto[i].pr_costo = parseFloat(pr_costo);
+        proceso.producto[i].subtotal = parseFloat(subtotal);
+
+        break; //Stop this loop, we found it!
+     }
+   }
+}
+
+function TableEdit(){
+ 
+
+      // ===== para editar las columnas ======
+      $('#tb-detalle tbody tr').editable({
+       
+        edit: function(values) {
+          // desabilitar el ultimo input =====
+          $(this).closest('tr').find('input:last').attr('disabled', 'disabled');
+          // para calcular el total
+          $('#tb-detalle tbody tr td').find('input').keyup(function() {
+            var total=0;
+            total=(parseFloat($(this).parent('td').siblings('td').not(':nth-child(3)').find('input').val())||0)*(parseFloat($(this).val())||0);
+             
+            $(this).closest('tr').find('input:last').val(total)
+          });
+
+          // efectos del boton
+          $(".edit i", this)
+            .removeClass('fa-pencil')
+            .addClass('fa-save')
+            .attr('title', 'Save');
+
+        },
+        save: function(values) {
+          console.log('valores saveeee');
+          console.log(values);
+          calTotal();
+       
+          var pk = $(".edit",this).attr("id");
+        
+          changeItem(pk, values.cantidad, values.pr_costo, values.subtotal);
+          console.log(proceso.producto);
+
+          $(".edit i", this)
+            .removeClass('fa-save')
+            .addClass('fa-pencil')
+            .attr('title', 'Edit');
+
+        },
+        cancel: function(values) {
+          $(".edit i", this)
+            .removeClass('fa-save')
+            .addClass('fa-pencil')
+            .attr('title', 'Edit');
+
+        }
+      });
+}
 
 // funcion pra buscar compras 
+// // objeto para guardar productos y factura de la compra
+var proceso = new Object();
+proceso.producto = new Array();
 
-$( "#comprobante" ).autocomplete({
+
+$( "#comprobantetxt" ).autocomplete({
 
     source: function( request, response ) {
       
@@ -64,8 +169,13 @@ $( "#comprobante" ).autocomplete({
             comprobante: pn.fields.comprobante,
             factura: pn.fields.factura,
             fecha: pn.fields.fecha,
-            tipodcompra: pn.tipodcompra,
+            tipodcompra: pn.fields.tipodcompra,
+            tipodcompra2: pn.fields.tipodcompra2,
             pr_costo: pn.fields.pr_costo,
+            grupo: pn.fields.grupo,
+            proveedor: pn.fields.proveedor,
+            proveedor_pk: pn.fields.proveedor_pk,
+            proveedor_codigo: pn.fields.proveedor_codigo,
             detalle: pn.fields.detalle,
             label: pn.fields.comprobante
           };
@@ -85,7 +195,7 @@ $( "#comprobante" ).autocomplete({
       console.log('los detallessss');
       var detalle1 = ui.item.detalle
       // console.log(ui.item.detalle);
-      
+      proceso.producto = new Array();
       var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
       resetDetalle();
 
@@ -107,6 +217,7 @@ $( "#comprobante" ).autocomplete({
           var cell5 = row.insertCell(4);
           var cell6 = row.insertCell(5);
           var cell7 = row.insertCell(6);
+          var cell8 = row.insertCell(7);
 
           // insertando los datos en los td
           cell1.innerHTML = detalle1[d].codigo;
@@ -119,17 +230,46 @@ $( "#comprobante" ).autocomplete({
 
           cell6.innerHTML = (detalle1[d].pr_costo)*detalle1[d].cantidad;
 
-
+          
           var ct= rowCount+1;
-         
-          cell7.innerHTML ="<a class='btn ladda-button btn-danger progress-button' id='eliminar-"+ct+"' onclick='deleteRow(this)'><i class='fa fa-trash-o fs20'></i></a>";
-          var ctotal = ct-1;
-      }
 
+          cell4.setAttribute('data-field', 'cantidad');
+          cell5.setAttribute('data-field', 'pr_costo');
+          cell6.setAttribute('data-field', 'subtotal');
+          cell7.innerHTML = "<a class='button button-small edit' title='Edit' id='"+detalle1[d].pk+"'><i class='fa fa-pencil'></i></a>";
+          cell8.innerHTML ="<a class='btn ladda-button btn-danger progress-button' id='eliminar-"+ct+"' data-pk='"+detalle1[d].pk+"' onclick='deleteRow(this)'><i class='fa fa-trash-o fs20'></i></a>";
+          var ctotal = ct-1;
+          proceso.producto.push({
+          'codigo_item': detalle1[d].codigo,
+          'pk': detalle1[d].pk,
+          'pk_item': detalle1[d].pk_item,
+          'cantidad': detalle1[d].cantidad,
+          'unidad': detalle1[d].unidad,
+          'descripcion': detalle1[d].descripcion,
+          'pr_costo': detalle1[d].pr_costo,
+          'subtotal': detalle1[d].cantidad*detalle1[d].pr_costo,
+          'accion': 'editar',
+         
+        });
+
+      }
+      calTotal();
       
       $('#factura').val(ui.item.factura);
       $('#datepicker1').val(ui.item.fecha);
-      $('input[name=tipodcompra]:checked').val();
+      $('#comprobante').val(ui.item.comprobante);
+      $('#grupo').val(ui.item.grupo);
+      $("#proveedor").val(ui.item.proveedor_codigo);
+      $("#nombre").val(ui.item.proveedor);
+      $("#pk_proveedor").val(ui.item.proveedor_pk);
+      $('#pk_comprobante').val(ui.item.pk);
+    
+      $("input[name=tipodcompra][value='"+ui.item.tipodcompra+"']").prop("checked",true);
+      $("input[name=tipodcompra2][value='"+ui.item.tipodcompra2+"']").prop("checked",true);
+      
+      TableEdit();
+      $('#imprimir').attr('disabled', false);
+      $('#elimnar-compra').attr('disabled', false);
       
       return false;
     },      
@@ -142,9 +282,6 @@ $( "#comprobante" ).autocomplete({
     });
 
 
-// // objeto para guardar productos y factura de la compra
-var proceso = new Object();
-proceso.producto = new Array();
 
 var table = new Array();
 
@@ -168,11 +305,12 @@ $(".agregar_item").keypress(function(e){
         proceso.producto.push({
           'codigo_item': item,
           'pk': $('#pk').val(),
-          'cantidad': cantidad,
+          'cantidad': parseFloat(cantidad),
           'unidad': $('#unidad').val(),
           'descripcion': $('#descripcion').val(),
-          'pr_costo': $('#pr_costo').val(),
+          'pr_costo': parseFloat($('#pr_costo').val()),
           'subtotal': ($('#pr_costo').val())*cantidad,
+          'accion': 'crear',
          
         });
 
@@ -239,7 +377,7 @@ $(".agregar_item").keypress(function(e){
 // funcion de presionado d enter y haga focus en grupo =====
 $("#grupo").keypress(function(e){
    if(e.which == 13) {
-    $('#datepicker1').focus();
+    $('#factura').focus();
    }
 });
 
@@ -375,6 +513,7 @@ $('#modal-text').on('keydown', function(e){
 
 // ====== funcion para listar los proveedores en el modal ===========
 function listaProveedorModal() {
+
   var table = $('#tb-proveedores').dataTable({
     language: {
       url: "/static/localizacion/es_ES.json"
@@ -385,6 +524,7 @@ function listaProveedorModal() {
     keys:           true,
     paging:         true,
     deferRender: true,
+    retrieve: true,
     ajax: {
         "url": "/lista_proveedores/",
         "dataSrc": ""
@@ -398,6 +538,7 @@ function listaProveedorModal() {
       { className: "columna_id", "targets": [ 0 ] }
     ]
   });
+
 
   table.on( 'key', function ( e, datatable, key, cell, originalEvent ) {
     // events.prepend( '<div>Key press: '+key+' for cell <i>'+cell.data()+'</i></div>' );
@@ -417,14 +558,10 @@ function listaProveedorModal() {
       }
     };
   });
-
-
-
- 
   
 }
   // $('#tb-proveedores tbody tr').addClass('prueba');
-  $('#tb-proveedores tr:first-child').addClass('yourClass');
+  // $('#tb-proveedores tr:first-child').addClass('yourClass');
 
 // ======= funcion para agregar y eliminar clases de los tr ========
 function selectRow (newRow) {
@@ -523,6 +660,8 @@ $(".proveedor_confirm").click(function(e) {
     listaProveedorModal();
 
     $.magnificPopup.open({
+      autoFocusLast : true,
+      focus: "#tb-proveedores_id",
       items: {
         src: '#proveedor-lista',
         type: 'inline'
@@ -530,6 +669,7 @@ $(".proveedor_confirm").click(function(e) {
       callbacks: {
         beforeOpen: function (e) {     
             this.st.mainClass = 'mfp-zoomIn';
+
         },
         afterClose: function() {
         }  
@@ -653,6 +793,66 @@ $("#add_buscar_item").keypress(function(e){
   }
 });
 
+// ====== funcion para hacer una seleccion ==============
+$('#tb-item tbody').on('click', 'tr', function () {
+  selectRow(this);
+} );
+
+// ====== funcion para listar los proveedores en el modal ===========
+function listaItemModal() {
+
+  var table = $('#tb-item').dataTable({
+    language: {
+      url: "/static/localizacion/es_ES.json"
+    },
+    scrollY:        '220px',
+    scrollCollapse: false,
+    scroller:       true,
+    keys:           true,
+    paging:         true,
+    retrieve: true,
+    deferRender: true,
+    ajax: {
+        "url": "/lista_items/",
+        "dataSrc": ""
+    },
+    columns: [
+      { "data": "pk" },
+      { "data": "codigo" },
+      { "data": "descripcion"},
+      { "data": "unidad" },
+      { "data": "pr_costo" }
+    ],
+    columnDefs: [
+      { className: "columna_id", "targets": [ 0, 4 ] }
+    ]
+  });
+
+
+  table.on( 'key', function ( e, datatable, key, cell, originalEvent ) {
+    // events.prepend( '<div>Key press: '+key+' for cell <i>'+cell.data()+'</i></div>' );
+
+    if (key==13) {
+      var row = datatable.row(cell.index().row);
+      var tr = $(row.node());
+      console.log(tr.closest('tr').children()[0].textContent);
+      if (tr.hasClass('prueba')){
+        $("#pk").val(tr.closest('tr').children()[0].textContent);
+        $("#add_buscar_item").val(tr.closest('tr').children()[1].textContent);
+        $("#unidad").val(tr.closest('tr').children()[3].textContent);
+        $("#descripcion").val(tr.closest('tr').children()[2].textContent);
+        $("#cantidad").val( 1 );
+        $("#pr_costo").val(tr.closest('tr').children()[4].textContent);
+        tr.removeClass('prueba');
+        table.fnFilterClear();
+        table.fnReloadAjax();
+        $.magnificPopup.close();
+      }
+    };
+  });
+  
+}
+
 // funciones para los eventos si y no de item ===============
 $(".item_confirm").click(function(e) {
   var dato = $(this).attr('data-value');
@@ -676,11 +876,11 @@ $(".item_confirm").click(function(e) {
   }else{
     
     e.stopPropagation();
-    listaProveedorModal();
+    listaItemModal();
 
     $.magnificPopup.open({
       items: {
-        src: '#proveedor-lista',
+        src: '#item-lista',
         type: 'inline'
       },
       callbacks: {
@@ -701,29 +901,7 @@ $(".item_confirm").click(function(e) {
 
 // ======================================================================================
 
-var total = 0;
-function calTotal(){
-  console.log('holaaaaaaaa');
-    var total=0;
-    var t=0;
-    $('#tb-detalle tbody tr').each(function () {
-        total = total*1 + $(this).find("td").eq(5).html()*1;  
-        
-        if (!isNaN(total)) {
-          t = t*1 + $(this).find("td").eq(5).html()*1; 
-          
-        };
-    });
 
-    console.log(t);
-    $('#sum-subtotal').text(t.toFixed(2));
-    
-    $('#sum-tax').text(t.toFixed(2));
-
-    $('#sum-total').text(total.toFixed(2));
-
-
-}
 
 // === metodo para mandar el csrf_token a django mediante ajax ====
 $.ajaxSetup({ 
@@ -813,89 +991,236 @@ $('#register-item').click(function(){
         }); 
       } 
 });
+
+// ======= para validar encabezado ======
+var validator_item = $('#encabezado').validate({
+    focusCleanup: true,
+    rules: {
+        proveedor: {
+            required: true
+        },
+        grupo: {
+            required: true
+        },
+        fecha: {
+            required: true
+        },
+        factura: {
+            required: false
+        },
+        nombre: {
+            required: true
+        },
+        
+    },
+    highlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+    },
+    errorElement: 'em',
+    errorClass: 'state-error',
+    validClass: "state-success",
+    errorPlacement: function(error, element) {
+        if(element.parent('.field').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
 // funcion para guardar los datos =============================0
 function onEnviar(){
-    proceso.comprobante = $('#comprobante').val();
-    proceso.factura = $('#factura').val();
-    proceso.fecha = $('#datepicker1').val();
-    proceso.tipodcompra = $('input[name=tipodcompra]:checked').val();
-    proceso.pk_proveedor = $("#pk_proveedor").val();
-    proceso.grupo = $("#grupo").val();
-    
+  if ($("#encabezado").valid()) {
+     if (proceso.producto.length > 0) {       
+        proceso.comprobantetxt = $('#comprobantetxt').val();
+        proceso.comprobante = $('#comprobante').val();
+        proceso.factura = $('#factura').val();
+        proceso.fecha = $('#datepicker1').val();
+        proceso.tipodcompra = $('input[name=tipodcompra]:checked').val();
+        proceso.tipodcompra2 = $('input[name=tipodcompra2]:checked').val();
+        proceso.pk_proveedor = $("#pk_proveedor").val();
+        proceso.grupo = $("#grupo").val();
+        
 
 
+        console.log('LLEGMOS A fn oneNVIARRRR');
+        console.log(JSON.stringify(proceso));
+       document.getElementById("proceso").value=JSON.stringify(proceso);
 
-    console.log(JSON.stringify(proceso));
-   document.getElementById("proceso").value=JSON.stringify(proceso);
+       $.ajax({
+              type: "POST",
+              url: "/compras/",
+              dataType: "json",
+              data: JSON.stringify(proceso),
+              success: function(data) {
+                 console.log(data.comprobante);
+                 console.log('guardo correctamenteeeee');
+                 $('#comprobante').val(data.comprobante);
+                 $('#pk_comprobante').val(data.pk_comprobante);
+                 var comp = data.comprobante;
+                 var comptxt = comp.toString();
+                 var lencomp = comptxt.length;
+                 while(lencomp < 8){
+                  comptxt = '0'.concat(comptxt);
+                  lencomp = lencomp+1;
+                 } 
+                $('#comprobantetxt').val(comptxt);
 
-   $.ajax({
-          type: "POST",
-          url: "/compras/",
-          dataType: "json",
-          data: JSON.stringify(proceso),
-          success: function(data) {
-             console.log(data.comprobante);
-             console.log('guardo correctamenteeeee');
-             $('#comprobante').val(data.comprobante);
-             new PNotify({
-                  title: "Guardado",
-                  text: "La compra se guardo correctamente",
-                  addclass: "stack-custom",
-                  type: 'success',
-                  width: '100%',
-                  shadow: true,
-                  delay: 2500,
-                  stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
-                              
-              });
+                proceso.producto = new Array();
+                var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
+                resetDetalle();
 
-             
+                for (var d in data.detalle){
+                    // obteniendo la tabla para insertar los campos
+                    
+                    // obteniendo el tr de la tabla
+                    var rowCount = t.rows.length-1;
+                    // insertando los  td
+                    var row = t.insertRow(rowCount);
+                    // insertando ids a los tr de la tabla
+                    row.id='tr_'+rowCount;
+                    //agregando celdas
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    var cell7 = row.insertCell(6);
+                    var cell8 = row.insertCell(7);
 
-            
-        }
-      }); 
+                    // insertando los datos en los td
+                    cell1.innerHTML = data.detalle[d].codigo;
+                    cell2.innerHTML = data.detalle[d].unidad;
+                    cell3.innerHTML = data.detalle[d].descripcion;
+
+                    cell4.innerHTML = data.detalle[d].cantidad;
+               
+                    cell5.innerHTML =  data.detalle[d].pr_costo;
+
+                    cell6.innerHTML = (data.detalle[d].pr_costo)*data.detalle[d].cantidad;
+
+                    
+                    var ct= rowCount+1;
+
+                    cell4.setAttribute('data-field', 'cantidad');
+                    cell5.setAttribute('data-field', 'pr_costo');
+                    cell6.setAttribute('data-field', 'subtotal');
+                    cell7.innerHTML = "<a class='button button-small edit' title='Edit' id='"+data.detalle[d].pk+"'><i class='fa fa-pencil'></i></a>";
+                    cell8.innerHTML ="<a class='btn ladda-button btn-danger progress-button' id='eliminar-"+ct+"' data-pk='"+data.detalle[d].pk+"' onclick='deleteRow(this)'><i class='fa fa-trash-o fs20'></i></a>";
+                    var ctotal = ct-1;
+                    proceso.producto.push({
+                    'codigo_item': data.detalle[d].codigo,
+                    'pk': data.detalle[d].pk,
+                    'pk_item': data.detalle[d].pk_item,
+                    'cantidad': data.detalle[d].cantidad,
+                    'unidad': data.detalle[d].unidad,
+                    'descripcion': data.detalle[d].descripcion,
+                    'pr_costo': data.detalle[d].pr_costo,
+                    'subtotal': data.detalle[d].cantidad*data.detalle[d].pr_costo,
+                    'accion': 'editar',
+                   
+                  });
+
+                }
+                TableEdit();
+                calTotal();
+                new PNotify({
+                      title: "Guardado",
+                      text: "La compra se guardo correctamente",
+                      addclass: "stack-custom",
+                      type: 'success',
+                      width: '100%',
+                      shadow: true,
+                      delay: 2500,
+                      stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
+                                  
+                });
+                
+                $('#imprimir').attr('disabled', false);
+
+                 
+
+                
+            }
+        }).fail(function(data){
+          var status = data.status;
+          var reason = data.reason;
+          new PNotify({
+                      title: "Error",
+                      text: "Hubo un error al guardar la compra"+data.status,
+                      addclass: "stack-custom",
+                      type: 'error',
+                      width: '100%',
+                      shadow: true,
+                      delay: 2500,
+                      stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
+                                  
+                  });
+
+        });
 
 
-   var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
-    
-    //funcion para eliminar tr por el id 
-   function  deleteRow(id) {
-      document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
-      document.getElementById(id)
-      );
-   }
+      //  var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
+        
+      //   //funcion para eliminar tr por el id 
+      //  function  deleteRow(id) {
+      //     document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
+      //     document.getElementById(id)
+      //     );
+      //  }
 
-   // for para contar los tr y eliminarlos
-  for (i = 0; i < t.rows.length; i++) {
-    console.log(t.rows[i]);
-    
-    deleteRow('tr_'+i);
-    
+      //  // for para contar los tr y eliminarlos
+      // for (i = 0; i < t.rows.length; i++) {
+      //   console.log(t.rows[i]);
+        
+      //   deleteRow('tr_'+i);
+        
+      // }
+
+      // vaciar texto del subtotal de la tabla
+      // $('#sum-subtotal').text('');
+
+      // delete proceso['comprobante'];
+      // delete proceso['factura'];
+      // delete proceso['fecha'];
+      // delete proceso['tipodcompra'];
+      // delete proceso['pk_proveedor'];
+      // delete proceso['grupo'];
+      
+      // $('#comprobante').val('');
+      // $('#factura').val('');
+      // $('#fecha').val('');
+      // $('#tipodcompra').val('');
+      // $("#pk_proveedor").val('');
+      // $("#grupo").val('');
+      // $('#proveedor').val('');
+      // $('#nombre').val('');
+      //   $("input[name=tipodcompra][value='credito']").prop("checked",true);
+      // $("input[name=tipodcompra2][value='reg_simplf']").prop("checked",true);
+     
+
+      // proceso.producto = new Array();
+
+       
+      console.log('procesooooo newwwwww');
+      console.log(proceso);
+    }else{
+         new PNotify({
+              title: "Error",
+              text: "No se agrego ningun producto a la compra",
+              addclass: "stack-custom",
+              type: 'error',
+              width: '100%',
+              shadow: true,
+              delay: 2500,
+              stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
+                          
+          }); 
+    }
   }
-
-  // vaciar texto del subtotal de la tabla
-  $('#sum-subtotal').text('');
-
-  delete proceso['comprobante'];
-  delete proceso['factura'];
-  delete proceso['fecha'];
-  delete proceso['tipodcompra'];
-  delete proceso['pk_proveedor'];
-  delete proceso['grupo'];
-  
-  $('#comprobante').val('');
-  $('#factura').val('');
-  $('#fecha').val('');
-  $('#tipodcompra').val('');
-  $("#pk_proveedor").val('');
-  $("#grupo").val('');
- 
-
-  proceso.producto = new Array();
-
-   
-  console.log('procesooooo newwwwww');
-  console.log(proceso);
 }
 
   
@@ -971,9 +1296,11 @@ function deleteAll() {
             
       //funcion para eliminar tr por el id 
      function  deleteRow(id) {
+      if (document.getElementById(id)) {
         document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
         document.getElementById(id)
         );
+      };
      }
 
      // for para contar los tr y eliminarlos
@@ -987,19 +1314,50 @@ function deleteAll() {
     // vaciar texto del subtotal de la tabla
     $('#sum-subtotal').text('');
 
+
     delete proceso['comprobante'];
     delete proceso['factura'];
     delete proceso['fecha'];
-    delete proceso['tipodcompra']
+    delete proceso['tipodcompra'];
+    delete proceso['pk_proveedor'];
+    delete proceso['grupo'];
     
     $('#comprobante').val('');
     $('#factura').val('');
     $('#fecha').val('');
     $('#tipodcompra').val('');
-    
+    $("#pk_proveedor").val('');
+    $("#grupo").val('');
+    $('#proveedor').val('');
+    $('#nombre').val('');
+    $("input[name=tipodcompra][value='credito']").prop("checked",true);
+    $("input[name=tipodcompra2][value='reg_simplf']").prop("checked",true);
    
 
+
     proceso.producto = new Array();
+    $.ajax({
+      url: '/buscar_comprobante/',
+      dataType: 'json',
+      type: 'GET',
+      success: function(dato) {
+        console.log(dato);
+        $('#comprobante').val(dato.comprobante);
+        var comp = dato.comprobante;
+        var comptxt = comp.toString();
+        var lencomp = comptxt.length;
+        while(lencomp < 8){
+          comptxt = '0'.concat(comptxt);
+          lencomp = lencomp+1;
+        } 
+        $('#comprobantetxt').val(comptxt);
+      }
+    });
+
+    $('#imprimir').attr('disabled', true);
+    $('#elimnar-compra').attr('disabled', true);
+
+
 }
 
 // funcion para buscar un proveedor ==============================
@@ -1033,7 +1391,7 @@ $( "#proveedor" ).autocomplete({
       // $( "#add_item_detail" ).val( ui.item.label );
       $( "#nombre" ).val( ui.item.nombre );
       $( "#proveedor" ).val( ui.item.codigo );
-       // $( "#pk" ).val( ui.item.pk );
+      $( "#pk_proveedor" ).val( ui.item.pk );
       $( "#grupo" ).focus();
       
       return false;
@@ -1047,8 +1405,39 @@ $( "#proveedor" ).autocomplete({
     });
 
 
+function Imprimir(){
+  var pk = $('#pk_comprobante').val();
+  window.open("http://casacampo.herokuapp.com/detalle_compra/"+pk, "_blank");
 
+}
 
+function EliminarCompra(){
+  var pk = $('#pk_comprobante').val();
+  $.ajax({
+      type: "POST",
+      url: "/eliminar_compra/",
+      dataType: "json",
+      data: {'pk': pk},
+      success: function(data) {
+         console.log(data);
+         deleteAll();
+         new PNotify({
+              title: "Eliminado",
+              text: "La compra se elimino correctamente",
+              addclass: "stack-custom",
+              type: 'success',
+              width: '100%',
+              shadow: true,
+              delay: 2500,
+              stack: {"dir1":"down", "dir2":"right", "push":"top", "spacing1": 0,"spacing2": 0}
+                          
+        });
+        
+        
+         
+    }
+  }); 
+}
 
 
   //         $( "#add_nit" ).autocomplete({

@@ -1407,7 +1407,7 @@ $( "#proveedor" ).autocomplete({
 
 function Imprimir(){
   var pk = $('#pk_comprobante').val();
-  window.open("http://localhost:8000/detalle_compra/"+pk, "_blank");
+  window.open("http://casacampo.herokuapp.com/detalle_compra/"+pk, "_blank");
 
 }
 
