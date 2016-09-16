@@ -67,6 +67,55 @@
     background-color: red;
     color: red;
   }
+  .well2 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .well3 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .digits .well2 {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    width: 50px;
+
+  }
+  .result, .clear {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .clear {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .use {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .cerrar-calculadora {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
   /*button:focus {color:red !important;}*/
 </style>
 <section id="content" class="">
@@ -263,16 +312,17 @@
                             <form method="POST">
                               
                               <div class="basic-invoice-buttons">
-                              <a  onclick="deleteAll();" class="btn btn-warning  mb5 reporte"><i class="fa fa-minus-square pr5"></i>Limpiar/Nuevo</a>
+                              <a  onclick="deleteAll();" class="btn btn-warning  mb5 reporte"><i class="fa fa-minus-square fa-2x pr5"></i>Limpiar/Nuevo</a>
                                   <a onclick="Imprimir();" class="btn btn-system  mb5 reporte" id="imprimir" disabled>
-                                      <i class="fa fa-print pr5"></i> Imprimir</a>
+                                      <i class="fa fa-print fa-2x pr5"></i> Imprimir</a>
 
                                   
                                       <input id="proceso" name="proceso" type="hidden" />
                                       <!--  <button class="btn btn-primary mb5" id="save"  name="action"><i class="fa fa-floppy-o pr5"></i> Terminar
                                         </button> -->
-                                        <a  class="btn btn-primary mb5 reporte" onclick="onEnviar();"><i class="fa fa-floppy-o pr5"></i> Terminar</a>  
-                                        <a  onclick="EliminarCompra();" class="btn btn-danger  mb5 " id="elimnar-compra" disabled><i class="fa fa-trash-o pr5"></i>Eliminar</a>               
+                                        <a  class="btn btn-primary mb5 reporte" onclick="onEnviar();"><i class="fa fa-floppy-o fa-2x pr5"></i> Terminar</a>  
+                                        <a  onclick="bottonEliminar();" class="btn btn-danger  mb5 " id="elimnar-compra" disabled><i class="fa fa-trash-o fa-2x pr5"></i>Eliminar</a>   
+                                         <a  class="btn btn-dark mb5 reporte" onclick="Calculadora();"><i class="fa fa-calculator fa-2x pr5" ></i> Calculadora</a>              
                                   
                               </div>
                             </form>
@@ -303,6 +353,92 @@
                         <button data-value="si"  class="btn btn-success proveedor_confirm" type="button" id="si_compra" >Si</button>
                         <button data-value="no" class="btn btn-danger proveedor_confirm" type="button">No</button>
                     </div>
+                </div>
+            </div>
+
+            <div id="modal-delete" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                        <span class="panel-title"> Compra</span>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="mt5"> Esta seguro en eliminar la compra</h3>
+
+                        
+                    </div>
+                    <div class="panel-footer text-right">
+                        
+                        <button data-value="si"  class="btn btn-success eliminar_confirm" type="button" id="si_eliminar" >Si</button>
+                        <button data-value="no" class="btn btn-danger eliminar_confirm" type="button">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-calculadora" class="popup-basic bg-none mfp-with-anim mfp-hide">
+
+                <div class="panel">
+                    <div class="panel-heading">
+              <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                        <span class="panel-title"> Calculadora</span>
+                    </div>
+                    <div class="panel-body">
+                       <div id="calculator">
+                        <div class="row">
+                          
+                          <div class="col-sm-12">
+                            <div class="well2 result">
+                              0
+                            </div>
+                          </div>
+
+                          <div class="digits">
+                            <div class="col-sm-2"><div class="well2 digit">7</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">8</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">9</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">+</div></div>
+                            <div class="col-sm-4">
+                               <div class="well3 use">
+                                Usar
+                               </div>
+                            </div>
+                            
+                            <div class="col-xs-2"><div class="well2 digit">4</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">5</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">6</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">-</div></div>
+                            <div class="col-sm-4">
+                               <div class="well3 cerrar-calculadora">
+                                Cerrar
+                               </div>
+                            </div>
+                            
+                            <div class="col-xs-2"><div class="well2 digit">1</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">2</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">3</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">&times;</div></div>
+                            <div class="col-sm-4">
+                               <div class="well3 clear">
+                                Borrar
+                               </div>
+                            </div>
+                            
+                            <div class="col-xs-2"><div class="well2 digit">0</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">.</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">=</div></div>
+                            <div class="col-xs-2"><div class="well2 digit">&divide;</div></div>
+                          </div>
+                        <div>
+                      </div>
+
+                        
+                    </div>
+                   
                 </div>
             </div>
 
@@ -558,6 +694,7 @@
   
   <script src="{% static "js/keynavigator.js"%}"></script>
   <script src="{% static "js/table-edits.min.js"%}"></script>
+  
   <script src="{% static "js/compras/compras.js"%}"></script>
   <script>
   $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });
@@ -578,7 +715,9 @@
     localStorage.setItem(grupo, $('#grupo').val());
     localStorage.setItem(factura, $('#factura').val());
    
-}
+  }
+
+  
   </script>
     
 {% endblock js %}

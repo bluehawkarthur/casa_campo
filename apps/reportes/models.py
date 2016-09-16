@@ -1,14 +1,15 @@
 from django.db import models
 from apps.item.models import Item
 from apps.proveedor.models import Proveedor
+from apps.compras.models import Compras, DetalleCompra
 
 
 class KardexAlmacen(models.Model):
 	codigo = models.ForeignKey(Item, null=True, blank=True)
 	fecha = models.DateField()
 	tipo = models.IntegerField() # Para indentificar al tipo de movimiento ej: compra, venta
-	cantidad = models.IntegerField()
-	pr_costo = models.IntegerField()
+	cantidad = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+	pr_costo = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 	comprobantetxt = models.CharField(max_length=15)
 	comprobante = models.IntegerField()
 	factura = models.IntegerField(null=True, blank=True)
@@ -17,6 +18,7 @@ class KardexAlmacen(models.Model):
 	grupo = models.CharField(max_length=100, null=True, blank=True)
 	proveedor = models.ForeignKey(Proveedor, null=True, blank=True)
 	hora = models.TimeField(auto_now_add=True, blank=True)
+	detalle_compra = models.ForeignKey(DetalleCompra, null=True, blank=True)
 
 	def __unicode__(self):
 		return U" %s - %s - %s - %s" % (self.comprobante, self.tipo, self.factura, self.hora)

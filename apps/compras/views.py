@@ -94,8 +94,7 @@ def compraCrear(request):
         numero = comprobante.comprobante + 1
     else:
         numero = 1
-   
-    
+
     if request.method == 'POST':
     	
         proceso = json.loads(request.body)
@@ -129,13 +128,33 @@ def compraCrear(request):
                     print 'editarrrrrr'
                     print k['cantidad']
                     item = Item.objects.filter(id=k['pk_item'])
-                    cantidad_total = item[0].cantidad + decimal.Decimal(k['cantidad'])
-                    item.update(cantidad=cantidad_total)
+
                     detalle = DetalleCompra.objects.filter(id=k['pk'])
+                    # modificando el producto =============
+                    cantidad_resta = item[0].cantidad - detalle[0].cantidad
+                    cantidad_total = cantidad_resta + decimal.Decimal(k['cantidad'])
+                    item.update(cantidad=cantidad_total)
+                    # modificando el detalle de la compra
                     detalle.update(
                         cantidad=decimal.Decimal(k['cantidad']),
                         pr_costo=decimal.Decimal(k['pr_costo'])
-                    ) 
+                    )
+                    # modificando el kadex del procuto ========
+                    kardex_almacen = KardexAlmacen.objects.filter(detalle_compra=k['pk'])
+                    kardex_almacen.update(
+                        fecha=date_1,
+                        tipo=1,
+                        cantidad=decimal.Decimal(k['cantidad']),
+                        pr_costo=decimal.Decimal(k['pr_costo']),
+                        comprobantetxt=proceso['comprobantetxt'],
+                        comprobante=proceso['comprobante'],
+                        factura=proceso['factura'],
+                        tipodcompra=proceso['tipodcompra'],
+                        tipodcompra2=proceso['tipodcompra2'],
+                        grupo=proceso['grupo'],
+                        proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                    )
+
                     vd.append({
                         "pk": detalle[0].pk,
                         "pk_item": k['pk_item'],
@@ -147,18 +166,23 @@ def compraCrear(request):
                     })
 
                 if k['accion'] == 'eliminar':
+                    # ELIMINAR KARDEX
+                    # modificando el producto a su stado anterior ==========
                     item = Item.objects.filter(id=k['pk_item'])
                     cantidad_total = item[0].cantidad - decimal.Decimal(k['cantidad'])
                     item.update(cantidad=cantidad_total)
+                    # eliminando el detalle de la compra y su kardex ==========
                     e = DetalleCompra.objects.filter(id=k['pk'])
                     e.delete()
 
                 if k['accion'] == 'crear':
-                    print 'crearrrrrrrrrrr'
+                    # CREAR KARDEX
                     print comprob[0].pk
+                    # modificando el producto ============
                     item = Item.objects.filter(id=k['pk'])
                     cantidad_total = item[0].cantidad + decimal.Decimal(k['cantidad'])
                     item.update(cantidad=cantidad_total)
+                    # creando el detalle de la compra ===================
                     pk_compra = Compras.objects.get(id=comprob[0].pk)
                     crearDetalle = DetalleCompra(
                         compras=pk_compra,
@@ -170,6 +194,26 @@ def compraCrear(request):
                         item=Item.objects.get(id=k['pk']),
                     )
                     crearDetalle.save()
+
+                    # creando el kardex del producto =================
+                    regKardex = KardexAlmacen(
+                        codigo=Item.objects.get(id=k['pk']),
+                        fecha=date_1,
+                        tipo=1,
+                        cantidad=decimal.Decimal(k['cantidad']),
+                        pr_costo=decimal.Decimal(k['pr_costo']),
+                        comprobantetxt=proceso['comprobantetxt'],
+                        comprobante=proceso['comprobante'],
+                        factura=proceso['factura'],
+                        tipodcompra=proceso['tipodcompra'],
+                        tipodcompra2=proceso['tipodcompra2'],
+                        grupo=proceso['grupo'],
+                        proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                        detalle_compra=crearDetalle,
+                        #hora=
+                    )
+                    regKardex.save()
+
                     vd.append({
                         "pk": crearDetalle.pk,
                         "pk_item": k['pk'],
@@ -203,8 +247,6 @@ def compraCrear(request):
             for k in proceso['producto']:
                 total += decimal.Decimal(k['subtotal'])
 
-
-            print "CALCULA EL TOTL", total
             crearCompra = Compras(
                 comprobante=proceso['comprobante'],
                 comprobantetxt=proceso['comprobantetxt'],
@@ -224,7 +266,7 @@ def compraCrear(request):
                 print '==============================='
 
                 item = Item.objects.filter(id=k['pk'])
-                cantidad_total = item[0].cantidad + int(k['cantidad'])
+                cantidad_total = item[0].cantidad + decimal.Decimal(k['cantidad'])
                 item.update(cantidad=cantidad_total)
 
                 crearDetalle = DetalleCompra(
@@ -252,8 +294,8 @@ def compraCrear(request):
                 regKardex = KardexAlmacen(
                     codigo=Item.objects.get(id=k['pk']),
                     fecha=date_1,
-                    tipo= 1,# Define el tipo de transaccion, ej compra, venta
-                    cantidad=int(k['cantidad']),
+                    tipo=1,# Define el tipo de transaccion, ej compra, venta
+                    cantidad=decimal.Decimal(k['cantidad']),
                     pr_costo=decimal.Decimal(k['pr_costo']),
                     comprobantetxt=proceso['comprobantetxt'],
                     comprobante=proceso['comprobante'],
@@ -262,27 +304,28 @@ def compraCrear(request):
                     tipodcompra2=proceso['tipodcompra2'],
                     grupo=proceso['grupo'],
                     proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                    detalle_compra=crearDetalle,
                     #hora=
                 )
                 regKardex.save()
 
                 # Guarda en el kardex de PROVEEDOR
-                proKardex = KardexAlmacen(
-                    codigo=Item.objects.get(id=k['pk']),
-                    fecha=date_1,
-                    tipo= 1,# Define el tipo de transaccion, ej compra, venta
-                    cantidad=int(k['cantidad']),
-                    pr_costo=decimal.Decimal(k['pr_costo']),
-                    comprobantetxt=proceso['comprobantetxt'],
-                    comprobante=proceso['comprobante'],
-                    factura=proceso['factura'],
-                    tipodcompra=proceso['tipodcompra'],
-                    tipodcompra2=proceso['tipodcompra2'],
-                    grupo=proceso['grupo'],
-                    proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
-                    #hora=
-                )
-                regKardex.save()
+                # proKardex = KardexAlmacen(
+                #     codigo=Item.objects.get(id=k['pk']),
+                #     fecha=date_1,
+                #     tipo= 1,# Define el tipo de transaccion, ej compra, venta
+                #     cantidad=int(k['cantidad']),
+                #     pr_costo=decimal.Decimal(k['pr_costo']),
+                #     comprobantetxt=proceso['comprobantetxt'],
+                #     comprobante=proceso['comprobante'],
+                #     factura=proceso['factura'],
+                #     tipodcompra=proceso['tipodcompra'],
+                #     tipodcompra2=proceso['tipodcompra2'],
+                #     grupo=proceso['grupo'],
+                #     proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
+                #     #hora=
+                # )
+                # regKardex.save()
                 numero = proceso['comprobante']
 
 

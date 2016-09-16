@@ -31,30 +31,30 @@ function calTotal(){
 }
 // funcion para resetear la tabla
 function resetDetalle() {  
-    var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
-    console.log('losss rowsss');
-    console.log(t.rows.length);
-    if (t.rows.length > 1){    
-      //funcion para eliminar tr por el id 
-     function  deleteRow(id) {
-      if (document.getElementById(id)) {
-        document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
-        document.getElementById(id)
-        );
-      }
-     }
+    // var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
+   
+    //   //funcion para eliminar tr por el id 
+    //  function  deleteRow(id) {
+    //   if (document.getElementById(id)) {
+    //     console.log('elimino el rowww', id);
+    //     document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
+    //     document.getElementById(id)
+    //     );
+    //   }
+    //  }
 
-     // for para contar los tr y eliminarlos
+    //  // for para contar los tr y eliminarlos
     
-      for (i = 0; i < t.rows.length; i++) {
-        console.log(t.rows[i]);
+    //   for (i = 0; i < t.rows.length; i++) {
+    //     console.log(t.rows[i]);
         
-        deleteRow('tr_'+i);
+    //     deleteRow('tr_'+i);
         
-      }
-    }
-    // vaciar texto del subtotal de la tabla
+    //   }
+    
+    // // vaciar texto del subtotal de la tabla
     $('#sum-subtotal').text('');
+    $("#tb-detalle > tbody > tr:not(:last)").remove();
 
 }
 
@@ -118,6 +118,10 @@ function TableEdit(){
             .addClass('fa-save')
             .attr('title', 'Save');
 
+          $(".edit", this)
+            .removeClass('btn-alert')
+            .addClass('btn-info');
+
         },
         save: function(values) {
           console.log('valores saveeee');
@@ -133,6 +137,10 @@ function TableEdit(){
             .removeClass('fa-save')
             .addClass('fa-pencil')
             .attr('title', 'Edit');
+
+          $(".edit", this)
+            .removeClass('btn-info')
+            .addClass('btn-alert');
 
         },
         cancel: function(values) {
@@ -236,7 +244,7 @@ $( "#comprobantetxt" ).autocomplete({
           cell4.setAttribute('data-field', 'cantidad');
           cell5.setAttribute('data-field', 'pr_costo');
           cell6.setAttribute('data-field', 'subtotal');
-          cell7.innerHTML = "<a class='button button-small edit' title='Edit' id='"+detalle1[d].pk+"'><i class='fa fa-pencil'></i></a>";
+          cell7.innerHTML = "<a class='button btn-alert edit' title='Edit' id='"+detalle1[d].pk+"'><i class='fa fa-pencil'></i></a>";
           cell8.innerHTML ="<a class='btn ladda-button btn-danger progress-button' id='eliminar-"+ct+"' data-pk='"+detalle1[d].pk+"' onclick='deleteRow(this)'><i class='fa fa-trash-o fs20'></i></a>";
           var ctotal = ct-1;
           proceso.producto.push({
@@ -1108,7 +1116,7 @@ function onEnviar(){
                     cell4.setAttribute('data-field', 'cantidad');
                     cell5.setAttribute('data-field', 'pr_costo');
                     cell6.setAttribute('data-field', 'subtotal');
-                    cell7.innerHTML = "<a class='button button-small edit' title='Edit' id='"+data.detalle[d].pk+"'><i class='fa fa-pencil'></i></a>";
+                    cell7.innerHTML = "<a class='button btn-alert edit' title='Edit' id='"+data.detalle[d].pk+"'><i class='fa fa-pencil'></i></a>";
                     cell8.innerHTML ="<a class='btn ladda-button btn-danger progress-button' id='eliminar-"+ct+"' data-pk='"+data.detalle[d].pk+"' onclick='deleteRow(this)'><i class='fa fa-trash-o fs20'></i></a>";
                     var ctotal = ct-1;
                     proceso.producto.push({
@@ -1140,8 +1148,9 @@ function onEnviar(){
                 });
                 
                 $('#imprimir').attr('disabled', false);
+                $('#elimnar-compra').attr('disabled', false);
 
-                 
+                
 
                 
             }
@@ -1292,27 +1301,28 @@ $( "#add_buscar_item" ).autocomplete({
 
 // funcion para eliminar todo de la tabla ====================================
 function deleteAll() {
-  var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
+  // var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];
             
-      //funcion para eliminar tr por el id 
-     function  deleteRow(id) {
-      if (document.getElementById(id)) {
-        document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
-        document.getElementById(id)
-        );
-      };
-     }
+  //     //funcion para eliminar tr por el id 
+  //    function  deleteRow(id) {
+  //     if (document.getElementById(id)) {
+  //       document.getElementById('tb-detalle').getElementsByTagName('tbody')[0].removeChild(
+  //       document.getElementById(id)
+  //       );
+  //     };
+  //    }
 
-     // for para contar los tr y eliminarlos
-    for (i = 0; i < t.rows.length; i++) {
-      console.log(t.rows[i]);
+  //    // for para contar los tr y eliminarlos
+  //   for (i = 0; i < t.rows.length; i++) {
+  //     console.log(t.rows[i]);
       
-      deleteRow('tr_'+i);
+  //     deleteRow('tr_'+i);
       
-    }
+  //   }
 
-    // vaciar texto del subtotal de la tabla
+  //   // vaciar texto del subtotal de la tabla
     $('#sum-subtotal').text('');
+    $("#tb-detalle > tbody > tr:not(:last)").remove();
 
 
     delete proceso['comprobante'];
@@ -1407,11 +1417,19 @@ $( "#proveedor" ).autocomplete({
 
 function Imprimir(){
   var pk = $('#pk_comprobante').val();
-  window.open("http://casacampo.herokuapp.com/detalle_compra/"+pk, "_blank");
+
+  var url = window.location.origin;
+ 
+  window.open(url+"/detalle_compra/"+pk, "_blank");
+
+  // window.open("http://localhost:8000/detalle_compra/"+pk, "_blank");
+
+
 
 }
 
 function EliminarCompra(){
+
   var pk = $('#pk_comprobante').val();
   $.ajax({
       type: "POST",
@@ -1438,6 +1456,84 @@ function EliminarCompra(){
     }
   }); 
 }
+
+// === para el focus item con teclado ============================
+$('#modal-delete').on('keydown', function(e){
+
+  var isfocus = $(this).find(':focus');
+  var isfocusindex = $(this).find(':focus').index();
+  var isfocusbegin = $(this).find('*:first:focus');
+  var isfocuslast = $(this).find('*:last:focus');
+  if ( e.which == 37 ) { // Left arrowkey
+  isfocus.prev().focus();
+  isfocusbegin.siblings(':last').focus();
+  }
+  if ( e.which == 39 ) { // right arrowkey
+  isfocus.next().focus();
+  isfocuslast.siblings(':first').focus();
+  }
+
+});
+
+function bottonEliminar() {
+  $.magnificPopup.open({
+      closeBtnInside:true,
+      removalDelay: 1000,
+      // closeOnContentClick: true,
+      // midClick: true,
+      autoFocusLast : true,
+      focus: "#si_eliminar",
+      closeMarkup: '<button title="%title%" type="button" class="mfp-close cerrar">&times;</button>',
+      items: {
+          src: '#modal-delete',
+          type: 'inline'
+      },
+      callbacks: {
+        beforeOpen: function (e) {
+            this.st.mainClass = 'mfp-zoomIn';
+        }
+      },
+  });
+}
+
+// funciones para los eventos si y no de item ===============
+$(".eliminar_confirm").click(function(e) {
+  var dato = $(this).attr('data-value');
+  if (dato == 'si') {
+    EliminarCompra();
+    $.magnificPopup.close();
+  }else{  
+    $.magnificPopup.close();
+  }
+});
+
+// funcion de presionado d enter y haga focus en codigo de proveedor =====
+function Calculadora(){
+    // e.stopPropagation();
+      $.magnificPopup.open({
+          closeBtnInside:true,
+          removalDelay: 1000,
+          // closeOnContentClick: true,
+          // midClick: true,
+          autoFocusLast : true,
+          // focus: "#si_compra",
+          closeMarkup: '<button title="%title%" type="button" class="mfp-close cerrar">&times;</button>',
+          items: {
+              src: '#modal-calculadora',
+              type: 'inline'
+          },
+          callbacks: {
+            beforeOpen: function (e) {
+                this.st.mainClass = 'mfp-zoomIn';
+                console.log('ddddd');
+            },
+            afterClose: function() {
+            }
+          },
+      });
+}
+  
+
 
 
   //         $( "#add_nit" ).autocomplete({
