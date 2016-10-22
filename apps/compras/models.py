@@ -21,6 +21,7 @@ class Compras(models.Model):
 		return U" %s- %s" % (self.comprobante, self.factura)
 
 
+
 class DetalleCompra(models.Model):
 	codigo = models.CharField(max_length=50)
 	unidad = models.CharField(max_length=100)

@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "allcp/forms/css/forms.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/jquery.calculator.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/jquery.calculator.alt.css"%}">
+    <link rel="stylesheet" href="{% static "css/datedropper.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css"%}">
 
     <!-- <link rel="stylesheet" type="text/css" href="{% static "js/jquery/jquery_ui/jquery-ui.min.css"%}"> -->
@@ -437,19 +438,39 @@
                     </a>
                     <ul class="nav sub-nav">
                         <li class="active">
-                            <a href="/crearitem"><span class="fa fa-file-text-o"></span>Articulos</a>
+                            <a href="/crearitem" class="accordion-toggle menu-open"><span class="fa fa-file-text-o"></span>Articulos <span class="caret"></span></a>
+                            <ul class="nav sub-nav">
+                                <li class="active">
+                                    <a href="/inventarios"><span class="fa"></span>Inventario</a>
+                                </li>
+                                <li class="active">
+                                    <a href="/listar_item"><span class="fa"></span>Kardex de articulos</a>
+                                </li>
+                                <li class="active">
+                                    <a href="/listar_item"><span class="fa"></span>Lista de precios</a>
+                                </li>
+                                <li class="active">
+                                    <a href="/reporte_compras"><span class="fa"></span>Compras</a>
+                                </li>
+                                <li class="active">
+                                    <a href="/listar_item"><span class="fa"></span>Consumos</a>
+                                </li>
+                                <li class="active">
+                                    <a href="/listar_item"><span class="fa"></span>Mermas/Exed.</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="active">
-                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Resumenes</a>
+                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Resumenes <span class="caret"></a>
                         </li>
                         <li class="active">
-                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Restaurant</a>
+                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Restaurant<span class="caret"></a>
                         </li>
                         <li class="active">
-                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Proveedores</a>
+                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Proveedores<span class="caret"></a>
                         </li>
                          <li class="active">
-                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Extras</a>
+                            <a href="/listar_item"><span class="fa fa-file-text-o"></span>Extras<span class="caret"></a>
                         </li>
                     </ul>
                 </li>
@@ -800,6 +821,10 @@
 <script src="{% static "js/pages/forms-widgets.js"%}"></script>
 <script src="{% static "js/pages/dashboard1.js"%}"></script>
 <script src="{% static "js/plugins/pnotify/pnotify.js"%}"></script>
+<script src="{% static "js/datedropper.js"%}"></script>
+<script src="{% static "js/pdfmake.min.js"%}"></script>
+<script src="{% static "js/vfs_fonts.js"%}"></script>
+
 
 {% block js %}
     

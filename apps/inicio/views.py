@@ -32,6 +32,15 @@ class Main(TemplateView):
 	def dispatch(self, *args, **kwargs):
 		return super(Main, self).dispatch(*args, **kwargs)
 
+
+class Reportes(TemplateView):
+	template_name = 'inicio/reportes.html'
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(Reportes, self).dispatch(*args, **kwargs)
+
+
 class LoginView(FormView):
 	form_class = LoginForm
 	template_name = "inicio/login.html"

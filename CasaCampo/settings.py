@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'apps.reportes',
     # librerias
     'widget_tweaks',
+    'django_extensions',
 
 )
 

@@ -11,3 +11,5 @@ class Item(models.Model):
 
 	def __unicode__(self):
 		return self.descripcion
+
+# ==== el valorado es igual a la cantidada x el pr_costo =====

@@ -1,4 +1,28 @@
 
+var tipoc  = $('input[name=tipodcompra]:checked').val();
+$('#mensaje').html("<b>"+tipoc+"</b>");
+
+$('input:radio[name=tipodcompra]').change(function() {
+
+    $('#mensaje').html("<b>"+this.value+"</b>");
+   
+});
+
+var tipoc  = $('input[name=tipodcompra2]:checked').val();
+$('#mensaje2').html("<b>"+tipoc+"</b>");
+
+$('input:radio[name=tipodcompra2]').change(function() {
+    console.log('ste es el valor');
+    console.log(this.value);
+    $('#mensaje2').html("<b>"+this.value+"</b>");
+    // if (this.value == 'allot') {
+    //     alert("Allot Thai Gayo Bhai");
+    // }
+    // else if (this.value == 'transfer') {
+    //     alert("Transfer Thai Gayo");
+    // }
+});
+
 // ====== para mostrar fecha de ingreso en el input ====
 var now = new Date();
 
@@ -29,6 +53,8 @@ function calTotal(){
 
 
 }
+
+
 // funcion para resetear la tabla
 function resetDetalle() {  
     // var t = document.getElementById('tb-detalle').getElementsByTagName('tbody')[0];

@@ -652,7 +652,7 @@ var Core = function(options) {
 
          // Set Default Options
          var defaults = {
-            sbl: "sb-l-o", // sidebar left open
+            sbl: "sb-l-m", // sb-l-o sidebar left open
             sbr: "sb-r-c", // sidebar right closed
             sbState: "save", //Enable local storage for sidebar states
 

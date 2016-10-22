@@ -7,7 +7,10 @@ urlpatterns = [
 	url(r'^lista_kalm/$', ListarKardexAlmacen.as_view(), name='lista_kalm'),
     url(r'^edit_kalm/(?P<pk>\d+)$', EditKardexAlmacen.as_view(), name='edit_kalm'),
     url(r'^delete_kalm/(?P<kar>\d+)$', 'apps.reportes.views.DeleteKalm', name='kalm_delete'),
-
+    url(r'^reporte_compras/$', 'apps.reportes.views.ReporteCompras', name='reporte_compras'),
+    url(r'^compras_ajax/$', 'apps.reportes.views.ComprasAjax', name='compras_ajax'),
+    url(r'^inventarios/$', 'apps.reportes.views.ReporteInventarios', name='inventarios'),
+    url(r'^inventario_ajax/$', 'apps.reportes.views.InventariosAjax', name='inventario_ajax'),
 
 	# url(r'^buscar_item/$', 'apps.compras.views.buscarProducto'),
 	# url(r'^buscar_compra/$', 'apps.compras.views.buscarCompra'),

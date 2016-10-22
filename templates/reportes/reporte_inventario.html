@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .tipo-compra{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    line-height: 1.8;
+  }
+  .casilla-productos{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #fafafa;
+    
+  }
+ /* .bloquet{
+    display: block;
+  }
+  .bodytable{
+    height: 220px;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    position: relative;
+  }
+  .with-cell{
+    width: 10%;
+  }*/
+  .prueba{
+    background-color: #958BD4 !important;
+    color: white;
+  }
+  .dataTables_wrapper select, .dataTables_wrapper input {
+    font-size: 12px;
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline;
+    border: 1px solid #d8dde5;
+  }
+  .dataTables_wrapper input {
+    width: 200px;
+  }
+  .dataTables_length, .dataTables_filter {
+    padding: 15px;
+  }
+
+  .columna_id{
+    display: none;
+  }
+  .color_button{
+    background-color: red;
+    color: red;
+  }
+  .well2 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .well3 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .digits .well2 {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    width: 50px;
+
+  }
+  .result, .clear {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .clear {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .use {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .cerrar-calculadora {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .titulo{
+    text-align: center;
+  }
+  .titulo-legend{
+    padding: 0;
+    margin: 0;f
+    font-size: 10px;
+    font-style: normal;
+    position: relative;
+    left: 30px;
+    top: -20px;
+    background-color: white;
+    display: inline;
+  }
+  /*button:focus {color:red !important;}*/
+</style>
+<section id="content" class="">
+
+            <div class="panel invoice-panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Reporte Inventario</span>
+
+                    
+                </div>
+                <div class="panel-body p20" id="invoice-item">
+
+                  
+                    <div class="allcp-form">
+                      <form  id="formreporte" method="POST">{% csrf_token %}
+                      <div class="row mb10">
+                        <div class="col-md-5 ph10 mb5">
+                          <div class="tipo-compra">
+                            <h5 class="titulo-legend">Inventario</h5>
+
+                            <div class="bs-options">
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary mb10">
+                                  <input type="radio" id="radioExample1" name="inventario" checked="" value="fisico">
+                                  <label for="radioExample1">Fisico</label>
+                                </div>
+                              </div>
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary">
+                                  <input type="radio" id="radioExample2" name="inventario" value="valorado">
+                                  <label for="radioExample2">Valorado</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-5 ph10 mb5">
+                          <div class="tipo-compra">
+                            <h5 class="titulo-legend">Imprimir</h5>
+
+                            <div class="bs-options">
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary mb10">
+                                  <input type="radio" id="radioExample3" name="imprimir" checked="" value="todo">
+                                  <label for="radioExample3">Todo</label>
+                                </div>
+                              </div>
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary">
+                                  <input type="radio" id="radioExample4" name="imprimir" value="saldos">
+                                  <label for="radioExample4">Solo con saldos</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                       
+                        
+                      </div>
+                      <div class="row mb10">
+                        
+                        <div class="col-md-5 ph10 mb5">
+                          <div class="tipo-compra">
+                            <h5 class="titulo-legend">Grupo</h5>
+                            <label for="" class="field ">
+                                <input type="text" name="grupo" id="grupo" class="gui-input" placeholder="Grupo">
+            
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-5 ph10 mb5">
+                          <div class="tipo-compra">
+                            <h5 class="titulo-legend">Ordenado por</h5>
+
+                            <div class="bs-options">
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary mb10">
+                                  <input type="radio" id="radioExample5" name="orden" checked="" value="codigo">
+                                  <label for="radioExample5">Codigo</label>
+                                </div>
+                              </div>
+                              <div class="bs-component">
+                                <div class="radio-custom radio-primary">
+                                  <input type="radio" id="radioExample6" name="orden" value="nombre">
+                                  <label for="radioExample6">Nombre</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                  
+                      </div>
+                
+
+                    <hr class="short alt">           
+                 
+                    <div class="row" id="invoice-table">
+                        <div class="col-md-12">
+
+                            <div class="clearfix"></div>
+                        
+                              
+                              <div class="basic-invoice-buttons">
+                              
+
+                                        <button type="button" id="imprimir" class="btn btn-system  mb5" name="pdf">
+                                            <i class="fa fa-print fa-2x pr5"></i> Imprimir
+                                        </button>
+                                   
+                                        <button type="submit" class="btn btn-success mb5 " id="excel" name="excel">
+                                            <i class="fa fa-file-excel-o fa-2x pr5"></i> Excel
+                                        </button>
+      
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+{% endblock content %}
+{% block js %}
+  {% load staticfiles %}
+ 
+  <script>
+  // $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  </script>
+  <script>
+
+    
+
+// ======= para validar el formulario de reporte ======
+var validator_reporte = $('#formreporte').validate({
+    focusCleanup: true,
+    rules: {
+        inventario: {
+            required: true
+        }
+    },
+    highlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+    },
+    errorElement: 'em',
+    errorClass: 'state-error',
+    validClass: "state-success",
+    errorPlacement: function(error, element) {
+        if(element.parent('.field').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
+
+
+// === metodo para mandar el csrf_token a django mediante ajax ====
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+
+$('#excel').click(function(){
+    console.log('am i called');
+      if ($("#formreporte").valid()) {
+      }
+});
+
+    // === imprimir reporte ===========
+$('#imprimir').click(function(){
+    console.log('am i called');
+      if ($("#formreporte").valid()) {
+        $.ajax({
+            type: "POST",
+            url: "/inventario_ajax/",
+            dataType: "json",
+            data: $("#formreporte").serialize(),
+            success: function(data) {
+             
+            
+
+              var body = [];
+              if (data[0].inventario == 'fisico') {
+                var titulos = new Array( 'Codigo', 'Descripcion', 'Unidad', 'Cantidad' );
+              }else{
+                var titulos = new Array( 'Codigo', 'Descripcion', 'Unidad', 'Cantidad', 'Pr. Unidad', 'Total' );
+              }
+              
+              
+              body.push(titulos);
+              for (key in data[0].item)
+              {
+                  
+                      var compra = data[0].item[key];
+                      var fila = new Array();
+                      // var total = compra.cantidad*compra.pr_costo;
+                      fila.push(compra.codigo);
+                      fila.push(compra.descripcion);
+                      fila.push(compra.unidad);
+                      fila.push(compra.cantidad);
+                      if (data[0].inventario == 'valorado') {
+                        fila.push(compra.pr_costo);
+                        fila.push(compra.total.toString());
+
+                      }
+
+              
+                      // fila.push(total.toString());
+                      
+                      body.push(fila);
+                  
+              }
+              // var fila = new Array();
+              // var total = compra.cantidad*compra.pr_costo;
+              // fila.push('');
+              // fila.push('');
+              // fila.push('');
+              // fila.push('');
+              // fila.push('');
+              // fila.push(data[0].total);
+              // fila.push('');
+              // fila.push('');
+              // fila.push('');
+        
+              
+              // body.push(fila);
+              var tamanio = [70, 250, 80, 70];
+              var tituloc = 'INVENTARIO FISICO'
+              if (data[0].inventario == 'valorado') {
+                tamanio = [60, 150, 60, 60, 60, 60]
+                tituloc = 'INVENTARIO VALORADO'
+              }
+           
+              var docDefinition = {
+                  pageSize: 'A4',
+                  pageMargins: [ 30, 30, 40, 60 ],
+                  content: [
+                    
+                    {
+                      style: 'tableExample',
+                      table: {
+                          headerRows: 1,
+                          widths: [180, 200, 100],
+                          body: [
+                              [{ text: 'CASA DE CAMPO', style: 'tableHeader' }, { text: tituloc, style: 'tableHeader'}, { text: data[0].fecha, style: 'tableHeader' }],
+
+                            
+                          ]
+                      },
+                      layout: 'noBorders'
+                    },
+                    {
+                        table: {
+                          headerRows: 1,
+                          widths: tamanio,  
+                          body: body
+                        },
+                        layout: 'lightHorizontalLines'
+                    }],
+
+                  styles: {
+                    header: {
+                      fontSize: 15,
+                      bold: true,
+                      alignment: 'justify',
+                      margin: [0, 0, 0, 0]
+                    },
+                    tableHeader: {
+                      bold: true,
+                      fontSize: 15,
+                      color: 'black'
+                    },
+                    tableExample: {
+                      margin: [0, 5, 0, 15]
+                    }
+                  }
+              };//end docDefinition
+              pdfMake.createPdf(docDefinition).print();
+               
+          }
+        }); 
+      }
+    
+});
+
+
+  
+  </script>
+    
+{% endblock js %}
+
