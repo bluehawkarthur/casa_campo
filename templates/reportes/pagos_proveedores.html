@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .tipo-compra{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    line-height: 1.8;
+  }
+  .casilla-productos{
+    position: relative;
+    vertical-align: top;
+    border: 1px solid #DDD;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    /*width: 100%;*/
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #fafafa;
+    
+  }
+  .casilla{
+    position: relative;
+    vertical-align: top;
+    display: -moz-inline-stack;
+    display: inline-block;
+    color: #626262;
+    outline: none;
+    /*width: 100%;*/
+    padding: 10px;
+
+    
+  }
+ /* .bloquet{
+    display: block;
+  }
+  .bodytable{
+    height: 220px;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    position: relative;
+  }
+  .with-cell{
+    width: 10%;
+  }*/
+  .prueba{
+    background-color: #958BD4 !important;
+    color: white;
+  }
+  .dataTables_wrapper select, .dataTables_wrapper input {
+    font-size: 12px;
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline;
+    border: 1px solid #d8dde5;
+  }
+  .dataTables_wrapper input {
+    width: 200px;
+  }
+  .dataTables_length, .dataTables_filter {
+    padding: 15px;
+  }
+
+  .columna_id{
+    display: none;
+  }
+  .color_button{
+    background-color: red;
+    color: red;
+  }
+  .well2 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .well3 {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f4f7f9;
+    border: 1px solid #e5eaee;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .digits .well2 {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    width: 50px;
+
+  }
+  .result, .clear {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .clear {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .use {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .cerrar-calculadora {
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .titulo{
+    text-align: center;
+  }
+  /*button:focus {color:red !important;}*/
+</style>
+<section id="content" class="">
+
+            <div class="panel invoice-panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Reporte de compras</span>
+
+                    
+                </div>
+                <div class="panel-body p20" id="invoice-item">
+                  
+                    <div class="allcp-form">
+                      <form  id="formreporte" method="POST">{% csrf_token %}
+                      <div class="row">
+                        <div class="col-md-7 casilla">
+                        
+                            <label for="inputStandard" class="col-lg-3 control-label">PAGOS</label>
+ 
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-1 control-label">Fecha</label>
+
+                                <div class="col-lg-5">
+                                    <div class="bs-component">
+                                        <input type="text" id="inputStandard" class="form-control" placeholder="Type Here...">
+                                    <div id="source-button" class="btn btn-system btn-xs" style="display: none;">&lt; &gt;</div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                          </div>
+                          <div class="col-md-5 casilla">
+                        
+                                <label for="inputStandard" class="col-lg-3 control-label">DEUDAS</label>
+                           
+                          </div>
+                      </div>
+                      <div class="row ">
+                           
+                          <div class="col-md-7">
+                            <div class="casilla-productos">
+                              <div class="col-md-2 ph10 mb5">
+                                  <label for="username" class="field-label">Codigo</label>
+                                  <label for="lastname" class="field ">
+                                      <input type="text" name="codigo" id="add_buscar_item" class="gui-input" placeholder="Codigo">
+                                      <input type="hidden" id="pk">
+                  
+                                  </label>
+                              </div>
+                              <div class="col-md-6 ph10 mb5">
+                                  <label for="username" class="field-label">Nombre</label>
+                                  <label for="unidad" class="field ">
+                                      <input type="text" name="unidad" id="unidad" class="gui-input" placeholder="Unidad">
+                  
+                                  </label>
+                              </div>
+                              <div class="col-md-2 ph10 mb5">
+                                  <label for="username" class="field-label">Docum.</label>
+                                  <label for="descripcion" class="field ">
+                                      <input type="text" name="descripcion" id="descripcion" class="gui-input" placeholder="Descripcion...">
+                  
+                                  </label>
+                              </div>
+                              <div class="col-md-2 ph10 mb5">
+                                  <label for="username" class="field-label">Monto</label>
+                                  <label for="cantidad" class="field ">
+                                      <input type="text" name="cantidad" id="cantidad" class="gui-input" placeholder="Cantid.">
+                  
+                                  </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-7">
+                            <div class="table-responsive">
+                              <div class="bs-component">
+                                  <table class="table table-bordered">
+                                      <thead>
+                                      <tr>
+                                          <th>Cod.</th>
+                                          <th>Tipo</th>
+                                          <th>Fecha</th>
+                                          <th>Docum</th>
+                                          <th>Deuda</th>
+                                          <th>Pago</th>
+                                          <th>F.P.</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <tr>
+                                          <td>1</td>
+                                          <td>John Doe</td>
+                                          <td>CEO</td>
+                                          <td>10am - 6pm</td>
+                                          <td>John Doe</td>
+                                          <td>CEO</td>
+                                          <td>10am - 6pm</td>
+
+                                      </tr>
+                                      <tr>
+                                          <td>2</td>
+                                          <td>Malory Grimm</td>
+                                          <td>Manager</td>
+                                          <td>9am - 6pm</td>
+                                      </tr>
+                                      <tr>
+                                          <td>3</td>
+                                          <td>Don Kihot</td>
+                                          <td>Manager</td>
+                                          <td>8am - 5pm</td>
+                                      </tr>
+                                      <tr>
+                                          <td>4</td>
+                                          <td>Susan White</td>
+                                          <td>CEO</td>
+                                          <td>9am - 6pm</td>
+                                      </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="table-responsive">
+                                <div class="bs-component">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                        
+                                            <th>Codigo</th>
+                                            <th>Nombre</th>
+                                            <th>Deuda</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            
+                                            <td>John Doe</td>
+                                            <td>CEO</td>
+                                            <td>10am - 6pm</td>
+                                        </tr>
+                                        <tr>
+                                          
+                                            <td>Malory Grimm</td>
+                                            <td>Manager</td>
+                                            <td>9am - 6pm</td>
+                                        </tr>
+                                        <tr>
+                                           
+                                            <td>Don Kihot</td>
+                                            <td>Manager</td>
+                                            <td>8am - 5pm</td>
+                                        </tr>
+                                        <tr>
+                                          
+                                            <td>Susan White</td>
+                                            <td>CEO</td>
+                                            <td>9am - 6pm</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          </div>
+                          
+                      </div>
+                        
+                  
+                   
+                     
+                
+
+                    <hr class="short alt">           
+                 
+                    <div class="row" id="invoice-table">
+                        <div class="col-md-12">
+
+                            <div class="clearfix"></div>
+                        
+                              
+                              <div class="basic-invoice-buttons">
+                              
+
+                                        <button type="button" id="imprimir" class="btn btn-system  mb5" name="pdf">
+                                            <i class="fa fa-print fa-2x pr5"></i> Imprimir
+                                        </button>
+                                   
+                                        <button type="submit" class="btn btn-success mb5 " id="excel" name="excel">
+                                            <i class="fa fa-file-excel-o fa-2x pr5"></i> Excel
+                                        </button>
+      
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+{% endblock content %}
+{% block js %}
+  {% load staticfiles %}
+ 
+  <script>
+  // $( "#datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  </script>
+  <script>
+
+    $( "#fecha_de" ).dateDropper({
+      'lang': 'es',
+      'format': 'Y-m-d',
+      'dropPrimaryColor': '#67d3e0',
+      'dropBorder': '1px solid #67d3e0',
+      'animate': false
+    });
+
+    $( "#fecha_a" ).dateDropper({
+      'lang': 'es',
+      'format': 'Y-m-d',
+      'dropPrimaryColor': '#67d3e0',
+      'dropBorder': '1px solid #67d3e0',
+      'animate': false
+    });
+
+// ======= para validar el formulario de reporte ======
+var validator_reporte = $('#formreporte').validate({
+    focusCleanup: true,
+    rules: {
+        fecha_de: {
+            required: true
+        },
+        fecha_a: {
+            required: true
+        }
+    },
+    highlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+    },
+    errorElement: 'em',
+    errorClass: 'state-error',
+    validClass: "state-success",
+    errorPlacement: function(error, element) {
+        if(element.parent('.field').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
+
+
+// === metodo para mandar el csrf_token a django mediante ajax ====
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+
+$('#excel').click(function(){
+    console.log('am i called');
+      if ($("#formreporte").valid()) {
+      }
+});
+
+    // === imprimir reporte ===========
+$('#imprimir').click(function(){
+    console.log('am i called');
+      if ($("#formreporte").valid()) {
+        $.ajax({
+            type: "POST",
+            url: "/compras_ajax/",
+            dataType: "json",
+            data: $("#formreporte").serialize(),
+            success: function(data) {
+             
+            
+
+              var body = [];
+              var titulos = new Array( 'Cod.', 'Descripcion', 'Unidad', 'Cantidad', 'Pr. Unid', 'Total', 'Comprob.', 'Fecha', 'Fact.' );
+              console.log(titulos);
+              body.push(titulos);
+              for (key in data[0].detalle)
+              {
+                  
+                      var compra = data[0].detalle[key];
+                      var fila = new Array();
+                      // var total = compra.cantidad*compra.pr_costo;
+                      fila.push(compra.codigo);
+                      fila.push(compra.descripcion);
+                      fila.push(compra.unidad);
+                      fila.push(compra.cantidad);
+                      fila.push(compra.pr_costo);
+                      fila.push(compra.total_compra);
+                      fila.push(compra.comprobantetxt);
+                      fila.push(compra.fecha);
+                      fila.push(compra.factura.toString());
+                      console.log(compra.factura);
+                      // fila.push(total.toString());
+                      
+                      body.push(fila);
+                  
+              }
+              var fila = new Array();
+              // var total = compra.cantidad*compra.pr_costo;
+              fila.push('');
+              fila.push('');
+              fila.push('');
+              fila.push('');
+              fila.push('');
+              fila.push(data[0].total);
+              fila.push('');
+              fila.push('');
+              fila.push('');
+        
+              
+              body.push(fila);
+           
+              var docDefinition = {
+                  pageSize: 'A4',
+                  pageMargins: [ 30, 30, 40, 60 ],
+                  content: [
+                    
+                    {
+                      style: 'tableExample',
+                      table: {
+                          headerRows: 1,
+                          widths: [180, 200, 80],
+                          body: [
+                              [{ text: 'CASA DE CAMPO', style: 'tableHeader' }, { text: 'REPORTE DE COMPRAS', style: 'tableHeader'}, { text: '', style: 'tableHeader' }],
+
+                              [ 'De: '+data[0].data_de+' A: '+data[0].data_a, '', '' ],
+                             
+                          ]
+                      },
+                      layout: 'noBorders'
+                    },
+                    {
+                        table: {
+                          headerRows: 1,
+                          widths: [20, 70, 30, 40,50,50,50,70,30],  
+                          body: body
+                        },
+                        layout: 'lightHorizontalLines'
+                    }],
+
+                  styles: {
+                    header: {
+                      fontSize: 15,
+                      bold: true,
+                      alignment: 'justify',
+                      margin: [0, 0, 0, 0]
+                    },
+                    tableHeader: {
+                      bold: true,
+                      fontSize: 15,
+                      color: 'black'
+                    },
+                    tableExample: {
+                      margin: [0, 5, 0, 15]
+                    }
+                  }
+              };//end docDefinition
+              pdfMake.createPdf(docDefinition).print();
+               
+          }
+        }); 
+      }
+    
+});
+
+
+  
+  </script>
+    
+{% endblock js %}
+

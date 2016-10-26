@@ -29,14 +29,27 @@ class KardexProveedor(models.Model):
 	fecha = models.DateField()
 	comprobantetxt = models.CharField(max_length=15)
 	comprobante = models.IntegerField()
-	monto = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-	pagop_ar = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-	hora = models.TimeField(auto_now_add=True, blank=True)
-	factura = models.IntegerField(null=True, blank=True)
-	tipodcompra = models.CharField(max_length=50)
-	tipodcompra2 = models.CharField(max_length=50)
-	cheque = models.CharField(max_length=100, null=True, blank=True)
-	banco = models.CharField(max_length=100, null=True, blank=True)
+	forma_pago = models.CharField(max_length=50)
+	deuda = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+	pago = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+	proveedor = models.ForeignKey(Proveedor, null=True, blank=True)
 
 	def __unicode__(self):
-		return U" %s - %s - %s - %s" % (self.comprobante, self.tipo, self.factura, self.hora)
+		return U" %s - %s" % (self.comprobante, self.tipo)
+
+# class KardexProveedor(models.Model):
+# 	tipo = models.IntegerField() # Para indentificar al tipo de movimiento ej: compra, venta
+# 	fecha = models.DateField()
+# 	comprobantetxt = models.CharField(max_length=15)
+# 	comprobante = models.IntegerField()
+# 	monto = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+# 	pagop_ar = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+# 	hora = models.TimeField(auto_now_add=True, blank=True)
+# 	factura = models.IntegerField(null=True, blank=True)
+# 	tipodcompra = models.CharField(max_length=50)
+# 	tipodcompra2 = models.CharField(max_length=50)
+# 	cheque = models.CharField(max_length=100, null=True, blank=True)
+# 	banco = models.CharField(max_length=100, null=True, blank=True)
+
+# 	def __unicode__(self):
+# 		return U" %s - %s - %s - %s" % (self.comprobante, self.tipo, self.factura, self.hora)

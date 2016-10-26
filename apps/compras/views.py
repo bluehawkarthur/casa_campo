@@ -120,6 +120,7 @@ def compraCrear(request):
                 total=total,
                 proveedor=Proveedor.objects.get(id=proceso['pk_proveedor'])
             )
+
             # comprobante = Compras.objects.last()
             # numero = comprobante.comprobante + 1
             vd = []
@@ -259,6 +260,30 @@ def compraCrear(request):
                 proveedor=Proveedor.objects.get(id=proceso['pk_proveedor']),
             )
             crearCompra.save()
+
+            forma = 'C'
+            pago = total
+            if proceso['tipodcompra'] == 'credito':
+                print 'lllegooo creditoooo'
+                prov = Proveedor.objects.filter(id=proceso['pk_proveedor'])
+                prov.update(saldo= prov[0].saldo+total)
+
+                forma = 'P'
+                pago = 0
+
+            KardexP = KardexProveedor(
+                tipo=1,
+                fecha=date_1,
+                comprobantetxt=proceso['comprobantetxt'],
+                comprobante=proceso['comprobante'],
+                forma_pago=forma,
+                deuda=total,
+                pago=pago,
+                proveedor=Proveedor.objects.get(id=proceso['pk_proveedor'])
+            )
+
+            KardexP.save()
+
             vd = []
             for k in proceso['producto']:
                 print '====== los productos son ======'

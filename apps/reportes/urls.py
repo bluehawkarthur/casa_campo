@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^compras_ajax/$', 'apps.reportes.views.ComprasAjax', name='compras_ajax'),
     url(r'^inventarios/$', 'apps.reportes.views.ReporteInventarios', name='inventarios'),
     url(r'^inventario_ajax/$', 'apps.reportes.views.InventariosAjax', name='inventario_ajax'),
+    url(r'^lista_provedores/$', 'apps.reportes.views.listaProveedores', name='lista_provedores'),
+    url(r'^pagos_provedores/$', 'apps.reportes.views.PagosProveedores', name='pagos_provedores'),
 
 	# url(r'^buscar_item/$', 'apps.compras.views.buscarProducto'),
 	# url(r'^buscar_compra/$', 'apps.compras.views.buscarCompra'),

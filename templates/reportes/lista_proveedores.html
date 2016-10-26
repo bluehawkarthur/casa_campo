@@ -1,0 +1,118 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <link rel="stylesheet" href="">
+  <style>
+    body {   font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; }
+   .center-text{
+    text-align:center;
+   }
+   .text-size{
+    font-size: 12px;
+
+   }
+  table.bottomBorder { 
+    border-collapse: collapse; 
+    }
+   
+  table.bottomBorder th { 
+    border-bottom: 1px solid black; 
+    border-top: 1px solid black; 
+    padding:5px; 
+    }
+
+  table.bottomBorder tbody tr:last-child { 
+    border-top: 1px solid black; 
+  
+    }
+  
+
+  </style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+<section id="content">
+          <table>
+              
+                <tr style="border:none;">
+                  <td width="30%">
+                  
+                    <b style="font-size: 12px;">CASA DE CAMPO</b> <br>
+                   
+                  </td>
+                  <td class="" width="50%">
+                    <b style="font-size: 12px;">PROVEEDORES</b> <br>
+                  </td>
+                  <td class=" text-size">
+                   
+                  </td>
+                  
+                </tr>
+              
+          </table>
+          <table style="padding-top: 5px;">
+                <tr style="border:none;">
+                  
+
+                </tr>
+          </table>
+          <br>
+
+          <table  class="text-size bottomBorder" >
+          <thead>
+            <tr  >
+              <th>CODIGO</th>
+              
+              <th data-field="item">NOMBRE</th>
+              <th data-field="item">SALDO</th>
+         
+            </tr>
+          </thead>
+          <tbody>
+            {%  for d in proveedores %}
+              
+              <tr style="text-align:center; padding: 5px;">
+                <td width="20%">
+                  {{d.codigo}}
+                </td>
+                <td width="50%">
+                  {{d.nombre}}
+                </td>
+                <td width="35%">{{d.saldo}}</td>
+                
+                
+              </tr>
+              
+            {% endfor %}
+
+
+            <tr style="text-align:center;">
+              <td colspan="1" class="white"></td>
+
+              <td ><br><b>Total:</b></td>
+              <td class="" id="sum-subtotal"><br>{{total}}</td>
+            </tr>
+          </tbody>
+          </table>
+
+
+
+
+      
+</section>
+
+
+
+</body>
+</html>

@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from .models import KardexAlmacen
 from apps.compras.models import Compras, DetalleCompra
 from apps.item.models import Item
+from apps.proveedor.models import Proveedor
 from django.template import RequestContext as ctx
 from django.http import HttpResponse
 from .excel_compras import WriteToCompras
@@ -15,6 +16,7 @@ import datetime
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from decimal import Decimal, ROUND_HALF_UP
+from apps.pdf.htmltopdf import render_to_pdf
 
 
 class ListarKardexAlmacen(PaginationMixin, ListView):
@@ -335,6 +337,30 @@ def InventariosAjax(request):
 		json_data = json.dumps(datas, cls=DjangoJSONEncoder)
 
 		return HttpResponse(json_data, content_type='application/json')
+
+
+def listaProveedores(request):
+	proveedor = Proveedor.objects.all()
+	total = 0
+	for p in proveedor:
+		if p.saldo == None:
+			p.saldo = 0
+			
+		total = total + p.saldo
+
+	data = {
+		'proveedores': proveedor,
+		'total': total
+	}
+
+	return render_to_pdf('reportes/lista_proveedores.html', data)
+
+
+def PagosProveedores(request):
+	template_name = "reportes/pagos_proveedores.html"
+	return render(request, template_name)
+
+
 # def buscarCompra(request):
 #     idCompra = request.GET['id']
 #     compra = Compras.objects.filter(comprobante=idCompra)
